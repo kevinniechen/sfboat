@@ -86,6 +86,18 @@
    "good": "Inside the breakwater, the most protected water on the SF city front.",
    "watch": "Swimmers. Anchoring needs a National Park Service permit, and it's strictly dead slow. Check the NPS rules first.",
    "src": "guides"
+  },
+  {
+   "id": "hunters-flats",
+   "name": "Hunters Point flats",
+   "at": [
+    37.733,
+    -122.3545
+   ],
+   "r": 450,
+   "good": "Wide, fairly shallow flats, away from the ship lanes and the Slot. Drifting here is how locals fish for halibut.",
+   "watch": "You'll drift with the current, so check which way it's running and keep clear of the shore and old pilings. It's choppier in the afternoon.",
+   "src": "guides"
   }
  ],
  "docks": [

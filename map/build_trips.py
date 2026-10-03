@@ -217,6 +217,35 @@ TRIPS = [
 ]
 
 
+# Where to CHILL (still water, engine off) and where to DOCK on each trip: ids/names from data/places.json
+CHILL_DOCK = {
+    "clipper-cove":     (["clipper"], ["Treasure Isle Marina"]),
+    "daysail-loop":     (["angel-east", "belvedere", "richardson"], ["Ayala Cove docks", "Sam's Anchor Cafe", "Horizons", "Sausalito Yacht Harbor"]),
+    "sunset-cityfront": (["aquatic", "mccovey"], ["Pier 39 Marina", "South Beach Harbor (home)"]),
+    "angel-ayala":      (["ayala", "angel-east"], ["Ayala Cove docks"]),
+    "mccovey":          (["mccovey"], ["South Beach Harbor (home)", "The Ramp"]),
+    "halibut-south":    (["hunters-flats"], ["The Ramp"]),
+    "sausalito":        (["richardson"], ["Fish", "Clipper Yacht Harbor", "Le Garage", "Schoonmaker Point Marina", "Horizons", "Sausalito Yacht Harbor"]),
+    "tiburon-sams":     (["belvedere", "angel-east"], ["Sam's Anchor Cafe", "Ayala Cove docks"]),
+    "jack-london":      ([], ["Jack London Square guest docks", "Pasta Pelican"]),
+    "richardson":       (["richardson", "belvedere"], ["Sausalito Yacht Harbor", "Horizons", "Schoonmaker Point Marina"]),
+}
+NO_CHILL = {
+    "jack-london": "The estuary is flat, but it's a busy channel with ferries and occasional ships, so don't drift there. "
+                   "The chill on this trip is tying up at Jack London Square.",
+}
+PLACES = json.load(open(os.path.join(HERE, "data", "places.json")))
+_chill_ids = {c["id"] for c in PLACES["chill"]}
+_dock_names = {d["name"] for d in PLACES["docks"]}
+for t in TRIPS:
+    c, d = CHILL_DOCK[t["id"]]
+    assert set(c) <= _chill_ids, (t["id"], set(c) - _chill_ids)
+    assert set(d) <= _dock_names, (t["id"], set(d) - _dock_names)
+    t["chill"], t["dock"] = c, d
+    if t["id"] in NO_CHILL:
+        t["no_chill"] = NO_CHILL[t["id"]]
+
+
 def nm(a, b):
     la = math.radians((a[0] + b[0]) / 2)
     return math.hypot((a[0] - b[0]) * 60, (a[1] - b[1]) * 60 * math.cos(la))

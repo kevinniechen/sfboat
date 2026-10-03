@@ -102,6 +102,12 @@
 "You cross the Oakland ship channel area near the Bay Bridge. Look hard for ships turning toward Oakland.",
 "Sheltered from the afternoon westerly, which makes it a good plan B when the Slot is too windy."
 ],
+"chill": [
+"clipper"
+],
+"dock": [
+"Treasure Isle Marina"
+],
 "nm": 7.3
 },
 {
@@ -306,6 +312,17 @@
 "Watch for gusts coming out of the lee of the islands and the headlands.",
 "Want lunch? Stop at Ayala Cove or Sausalito along the way."
 ],
+"chill": [
+"angel-east",
+"belvedere",
+"richardson"
+],
+"dock": [
+"Ayala Cove docks",
+"Sam's Anchor Cafe",
+"Horizons",
+"Sausalito Yacht Harbor"
+],
 "nm": 18.9
 },
 {
@@ -427,6 +444,14 @@
 "tips": [
 "Give racing sailboats room. They can't easily change course mid-race.",
 "Coming home after dark? Practice it first. Red, right, returning works at night too: look for the lights."
+],
+"chill": [
+"aquatic",
+"mccovey"
+],
+"dock": [
+"Pier 39 Marina",
+"South Beach Harbor (home)"
 ],
 "nm": 7.6
 },
@@ -585,6 +610,13 @@
 "Raccoon Strait has strong current. Time it with the tide.",
 "China Cove, just east of Ayala, and Quarry Beach on the east side are quieter lunch anchors."
 ],
+"chill": [
+"ayala",
+"angel-east"
+],
+"dock": [
+"Ayala Cove docks"
+],
 "nm": 15.7
 },
 {
@@ -633,6 +665,13 @@
 "tips": [
 "Big fenders if you'll raft up, and a long-handled net for home-run balls.",
 "Check the Port of SF's McCovey Cove rules before you go."
+],
+"chill": [
+"mccovey"
+],
+"dock": [
+"South Beach Harbor (home)",
+"The Ramp"
 ],
 "nm": 0.3
 },
@@ -755,6 +794,12 @@
 "tips": [
 "Check the current: drifting works best on a moderate tide, not a rip.",
 "Anchorage 8A (big ships waiting) is just offshore. Keep your distance."
+],
+"chill": [
+"hunters-flats"
+],
+"dock": [
+"The Ramp"
 ],
 "nm": 8.6
 },
@@ -904,6 +949,17 @@
 "tips": [
 "The Sausalito ferry runs the same path. Watch for it.",
 "Slow down inside Richardson Bay: there are no-wake zones."
+],
+"chill": [
+"richardson"
+],
+"dock": [
+"Fish",
+"Clipper Yacht Harbor",
+"Le Garage",
+"Schoonmaker Point Marina",
+"Horizons",
+"Sausalito Yacht Harbor"
 ],
 "nm": 16.0
 },
@@ -1061,6 +1117,14 @@
 "tips": [
 "Raccoon Strait current can be strong. Plan with the current tables."
 ],
+"chill": [
+"belvedere",
+"angel-east"
+],
+"dock": [
+"Sam's Anchor Cafe",
+"Ayala Cove docks"
+],
 "nm": 16.0
 },
 {
@@ -1198,6 +1262,12 @@
 "The way in follows the Oakland ship channel. Stay at the edge and watch for container ships.",
 "Watch for the Oakland/Alameda ferries in the estuary."
 ],
+"chill": [],
+"dock": [
+"Jack London Square guest docks",
+"Pasta Pelican"
+],
+"no_chill": "The estuary is flat, but it's a busy channel with ferries and occasional ships, so don't drift there. The chill on this trip is tying up at Jack London Square.",
 "nm": 11.1
 },
 {
@@ -1337,6 +1407,15 @@
 ],
 "tips": [
 "Shallow outside the channels. Watch your depth sounder."
+],
+"chill": [
+"richardson",
+"belvedere"
+],
+"dock": [
+"Sausalito Yacht Harbor",
+"Horizons",
+"Schoonmaker Point Marina"
 ],
 "nm": 15.9
 }
