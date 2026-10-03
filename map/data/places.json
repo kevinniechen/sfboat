@@ -1,0 +1,291 @@
+{
+ "chill": [
+  {
+   "id": "richardson",
+   "name": "Off Sausalito / Richardson Bay",
+   "at": [
+    37.869,
+    -122.4835
+   ],
+   "r": 650,
+   "fav": true,
+   "good": "Your favorite. Sunny, and the hills block the wind.",
+   "watch": "It's shallow, so keep an eye on the depth gauge. Stay clear of the ferry route into Sausalito and the boats anchored there.",
+   "src": "yours"
+  },
+  {
+   "id": "angel-east",
+   "name": "East side of Angel Island",
+   "at": [
+    37.859,
+    -122.409
+   ],
+   "r": 520,
+   "good": "The island blocks the west wind. Quieter than Ayala Cove. Probably close to your captain's spot.",
+   "watch": "Avoid Raccoon Strait on the north side, where the current is strong.",
+   "extra": "Quarry Beach is the classic lunch anchor here: mud bottom, good holding. Arrive before about 12:30, and note the bottom drops off steeply to the east.",
+   "src": "yours"
+  },
+  {
+   "id": "clipper",
+   "name": "Clipper Cove, Treasure Island",
+   "at": [
+    37.8157,
+    -122.37
+   ],
+   "r": 360,
+   "good": "Sheltered on three sides, flat water, Bay Bridge views. Good for longer hangs.",
+   "watch": "Far from Sausalito. Shallow entrance with a shoal on the north side, so enter near high tide.",
+   "extra": "12\u201318 ft, mud/sand bottom. No permit needed for a stay under 24 hours. Busy raft-ups on weekends.",
+   "src": "yours"
+  },
+  {
+   "id": "ayala",
+   "name": "Ayala Cove moorings, Angel Island",
+   "at": [
+    37.8693,
+    -122.4362
+   ],
+   "r": 200,
+   "good": "Well protected from wind and swell, with the Bay's biggest public docks and moorings, plus a caf\u00e9 and trails ashore.",
+   "watch": "Busy on summer weekends. Day slips are 8 am to sunset (fee). Reach it through Raccoon Strait, so mind the current.",
+   "src": "guides"
+  },
+  {
+   "id": "mccovey",
+   "name": "McCovey Cove (game days)",
+   "at": [
+    37.7772,
+    -122.3885
+   ],
+   "r": 170,
+   "good": "Right next to Pier 40. Float behind right field and wait for a splash hit.",
+   "watch": "No wake. Anchor no more than 2 hours before first pitch, and no overnight stays. Crowded with kayaks.",
+   "src": "guides"
+  },
+  {
+   "id": "belvedere",
+   "name": "Belvedere Cove",
+   "at": [
+    37.872,
+    -122.46
+   ],
+   "r": 170,
+   "good": "A pretty lunch or sunset spot between Belvedere and Tiburon, next door to Sam's.",
+   "watch": "Unprotected, so calm days only.",
+   "src": "guides"
+  },
+  {
+   "id": "aquatic",
+   "name": "Aquatic Park cove",
+   "at": [
+    37.8085,
+    -122.4225
+   ],
+   "r": 220,
+   "good": "Inside the breakwater, the most protected water on the SF city front.",
+   "watch": "Swimmers. Anchoring needs a National Park Service permit, and it's strictly dead slow. Check the NPS rules first.",
+   "src": "guides"
+  }
+ ],
+ "docks": [
+  {
+   "name": "Fish",
+   "area": "Sausalito",
+   "type": "restaurant",
+   "at": [
+    37.86809,
+    -122.49773
+   ],
+   "how": "Tie up at Clipper Yacht Harbor's south dock (Basin 2) for lunch at Fish.",
+   "contact": "Clipper Yacht Harbor 415-332-3500"
+  },
+  {
+   "name": "Clipper Yacht Harbor",
+   "area": "Sausalito",
+   "type": "marina",
+   "at": [
+    37.87046,
+    -122.49803
+   ],
+   "how": "The big one: Sausalito's largest harbor, 700 slips in 4 basins. Guest and transient slips; call ahead.",
+   "contact": "415-332-3500"
+  },
+  {
+   "name": "Le Garage",
+   "area": "Sausalito",
+   "type": "restaurant",
+   "at": [
+    37.86388,
+    -122.4909
+   ],
+   "how": "French bistro in an old auto shop. Tie up on Schoonmaker Point Marina's north dock.",
+   "contact": "Schoonmaker Point 415-331-5550"
+  },
+  {
+   "name": "Schoonmaker Point Marina",
+   "area": "Sausalito",
+   "type": "marina",
+   "at": [
+    37.8636,
+    -122.4896
+   ],
+   "how": "Guest slips by prior arrangement; side-ties for big boats.",
+   "contact": "415-331-5550"
+  },
+  {
+   "name": "Horizons",
+   "area": "Sausalito",
+   "type": "restaurant",
+   "at": [
+    37.85358,
+    -122.47857
+   ],
+   "how": "Its own 84-ft dock for diners, downtown on Bridgeway. Reserve ahead. Expect ferry wakes here.",
+   "contact": "415-331-3232"
+  },
+  {
+   "name": "Sausalito Yacht Harbor",
+   "area": "Sausalito",
+   "type": "marina",
+   "at": [
+    37.85914,
+    -122.48105
+   ],
+   "how": "Downtown marina, steps from the shops and restaurants. Call about guest slips.",
+   "contact": "415-332-5000"
+  },
+  {
+   "name": "Sam's Anchor Cafe",
+   "area": "Tiburon & Angel Island",
+   "type": "restaurant",
+   "at": [
+    37.87309,
+    -122.45656
+   ],
+   "how": "Docks below the deck, room for about a dozen boats; they'll serve you aboard. Shallow at low tide, so go mid to high tide.",
+   "contact": "415-435-4527"
+  },
+  {
+   "name": "Ayala Cove docks",
+   "area": "Tiburon & Angel Island",
+   "type": "public",
+   "at": [
+    37.8688,
+    -122.4352
+   ],
+   "how": "State park day slips, 8 am to sunset (fee, self-pay), plus moorings. Caf\u00e9, picnic areas, Mt. Livermore hike.",
+   "contact": "Angel Island State Park"
+  },
+  {
+   "name": "South Beach Harbor (home)",
+   "area": "San Francisco",
+   "type": "marina",
+   "at": [
+    37.7801,
+    -122.3852
+   ],
+   "how": "Your harbor. It also has guest docks if friends come by boat.",
+   "contact": "415-495-4911"
+  },
+  {
+   "name": "The Ramp",
+   "area": "San Francisco",
+   "type": "restaurant",
+   "at": [
+    37.76422,
+    -122.38677
+   ],
+   "how": "Casual waterfront spot in Mission Bay, just a mile south of Pier 40. Guest dock, first come, first served.",
+   "contact": "415-621-2378"
+  },
+  {
+   "name": "Pier 39 Marina",
+   "area": "San Francisco",
+   "type": "marina",
+   "at": [
+    37.80984,
+    -122.40916
+   ],
+   "how": "Guest slips in the middle of Fisherman's Wharf. Touristy, but handy. Watch for ferries at Pier 41 next door.",
+   "contact": "415-705-5436"
+  },
+  {
+   "name": "San Francisco Marina",
+   "area": "San Francisco",
+   "type": "marina",
+   "at": [
+    37.8066,
+    -122.44553
+   ],
+   "how": "West Harbor guest docks (charged per foot), by the Marina Green and Chestnut St. There's a gas dock here too.",
+   "contact": "415-831-6322"
+  },
+  {
+   "name": "Treasure Isle Marina",
+   "area": "San Francisco",
+   "type": "marina",
+   "at": [
+    37.81878,
+    -122.36491
+   ],
+   "how": "Marina inside Clipper Cove. Call about guest berths. (Pin approximate.)",
+   "contact": "415-981-2416"
+  },
+  {
+   "name": "Jack London Square guest docks",
+   "area": "East Bay",
+   "type": "public",
+   "at": [
+    37.79339,
+    -122.27562
+   ],
+   "how": "Free, first come, first served, right by the restaurants and Heinold's First and Last Chance Saloon.",
+   "contact": "JLS Marina 510-834-4591"
+  },
+  {
+   "name": "Pasta Pelican",
+   "area": "East Bay",
+   "type": "restaurant",
+   "at": [
+    37.79154,
+    -122.27749
+   ],
+   "how": "On the Alameda side of the estuary. Free tie-up when you eat there.",
+   "contact": "510-864-7427"
+  },
+  {
+   "name": "Ballena Isle Marina",
+   "area": "East Bay",
+   "type": "marina",
+   "at": [
+    37.76662,
+    -122.28583
+   ],
+   "how": "Alameda marina with a fuel dock, pumpout, and restaurants.",
+   "contact": "510-523-5528"
+  },
+  {
+   "name": "Emeryville Marina + Trader Vic's",
+   "area": "East Bay",
+   "type": "restaurant",
+   "at": [
+    37.83815,
+    -122.30787
+   ],
+   "how": "Trader Vic's sits next to the marina. Call the marina about tying up.",
+   "contact": "Trader Vic's / Emeryville Marina"
+  },
+  {
+   "name": "Berkeley Marina",
+   "area": "East Bay",
+   "type": "marina",
+   "at": [
+    37.86787,
+    -122.31305
+   ],
+   "how": "Guest slips by the day, a fuel dock, and a launch ramp.",
+   "contact": "510-981-6740"
+  }
+ ]
+}

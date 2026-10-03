@@ -1,0 +1,383 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bay Trips from Pier 40</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<style>
+:root { --bg:#0b0f14; --panel:#11161d; --line:#222b36; --fg:#eef2f6; --muted:#8d9aa8; --heat:#ff6a2b; --hot:#ffd27a; }
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; background: var(--bg); color: var(--fg);
+  font: 14px/1.45 -apple-system, BlinkMacSystemFont, "Avenir Next", "Segoe UI", sans-serif; }
+#app { display: grid; grid-template-columns: 380px 1fr; height: 100%; }
+#side { background: var(--panel); border-right: 1px solid var(--line); overflow-y: auto; }
+#map { height: 100%; background: #06090d; }
+header { padding: 18px 18px 10px; position: sticky; top: 0; background: var(--panel); z-index: 2; border-bottom: 1px solid var(--line); }
+h1 { margin: 0; font-size: 20px; }
+.sub { color: var(--muted); font-size: 12.5px; margin-top: 3px; }
+.sub a { color: #9cc4ff; }
+.list { padding: 8px 10px 20px; }
+.trip { display: grid; grid-template-columns: 30px 1fr auto; gap: 10px; align-items: center; width: 100%; text-align: left;
+  background: none; color: inherit; border: 1px solid transparent; border-radius: 12px; padding: 10px; cursor: pointer; font: inherit; }
+.trip:hover { background: #161d26; }
+.trip.on { background: #1a222d; border-color: #33404f; }
+.rank { font-weight: 800; color: var(--muted); font-size: 18px; text-align: center; }
+.tname { font-weight: 650; font-size: 14.5px; }
+.meta { color: var(--muted); font-size: 12px; margin-top: 2px; }
+.heat { display: flex; gap: 2px; }
+.heat i { width: 5px; height: 16px; border-radius: 2px; background: #2a333e; }
+.heat i.f { background: linear-gradient(var(--hot), var(--heat)); }
+.lvl { display: inline-block; font-size: 11px; font-weight: 700; padding: 1px 7px; border-radius: 10px; margin-left: 6px; vertical-align: 1px; }
+.lvl.beginner { background: #12351f; color: #7ce38b; }
+.lvl.beginner\+ { background: #1d3a1a; color: #b5e36f; }
+.lvl.intermediate { background: #3a3313; color: #f5c542; }
+.lvl.advanced { background: #3d1616; color: #ff7b7b; }
+#detail { padding: 6px 18px 30px; display: none; }
+#detail.show { display: block; }
+.back { background: #1a222d; color: var(--fg); border: 1px solid #33404f; border-radius: 8px; padding: 5px 10px; cursor: pointer; font: inherit; margin: 12px 0 6px; }
+h2 { font-size: 21px; margin: 8px 0 4px; }
+.stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 12px 0; }
+.stat { background: #161d26; border-radius: 10px; padding: 8px 10px; }
+.stat b { display: block; font-size: 17px; }
+.stat span { color: var(--muted); font-size: 11.5px; }
+h3 { font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); margin: 18px 0 8px; }
+.stop { display: grid; grid-template-columns: 26px 1fr; gap: 8px; margin: 10px 0; }
+.stop .ic { width: 26px; height: 26px; border-radius: 13px; display: flex; align-items: center; justify-content: center; font-size: 13px; }
+.ic.dock { background: #1f6feb; } .ic.anchor { background: #8957e5; } .ic.view { background: #3a4654; }
+.stop b { display: block; }
+.stop p { margin: 2px 0 0; color: #c7d0da; font-size: 13px; }
+ul.tips, ul.cross { padding-left: 18px; margin: 4px 0; }
+ul.tips li, ul.cross li { margin: 5px 0; font-size: 13px; color: #c7d0da; }
+.cross .r { color: #ff8a8a; } .cross .y { color: #f5c542; } .cross .m { color: #ff7ad9; }
+.src { color: var(--muted); font-size: 11.5px; margin-top: 22px; }
+.src a { color: #9cc4ff; }
+.leaflet-heat-pane svg { mix-blend-mode: screen; }
+.leaflet-container { background: #06090d; }
+.leaflet-popup-content-wrapper, .leaflet-popup-tip { background: #161d26; color: var(--fg); }
+.leaflet-popup-content { margin: 10px 12px; font-size: 13px; }
+.leaflet-control-attribution { background: rgba(11,15,20,.7) !important; color: var(--muted) !important; }
+.leaflet-control-attribution a { color: #9cc4ff !important; }
+.pin { background: none; border: none; }
+.pin div { width: 26px; height: 26px; border-radius: 13px; display: flex; align-items: center; justify-content: center;
+  font-size: 13px; border: 2px solid #fff; box-shadow: 0 2px 8px rgba(0,0,0,.6); }
+.lbl { background: rgba(11,15,20,.85); color: #fff; border: none; box-shadow: none; font-weight: 700; font-size: 11.5px; }
+.lbl::before { display: none; }
+.boat { background: none; border: none; }
+.tabs { display: flex; gap: 6px; margin-top: 12px; }
+.tab { flex: 1; background: #161d26; color: var(--fg); border: 1px solid #2a3542; border-radius: 9px; padding: 7px 8px; cursor: pointer; font: inherit; font-weight: 600; }
+.tab.on { background: #ff7a33; border-color: #ff7a33; color: #1a0d05; }
+#places { padding: 4px 12px 30px; }
+#places h3 { margin: 18px 6px 8px; }
+.place { display: grid; grid-template-columns: 30px 1fr; gap: 10px; width: 100%; text-align: left; background: none; color: inherit;
+  border: 1px solid transparent; border-radius: 12px; padding: 10px; cursor: pointer; font: inherit; }
+.place:hover, .place.on { background: #161d26; border-color: #2a3542; }
+.place .ic { width: 30px; height: 30px; border-radius: 15px; display: flex; align-items: center; justify-content: center; font-size: 14px; }
+.place b { font-size: 14px; }
+.place .good { color: #c7d0da; font-size: 12.5px; margin-top: 3px; }
+.place .watch { color: #f5c542; font-size: 12.5px; margin-top: 3px; }
+.place .how { color: #c7d0da; font-size: 12.5px; margin-top: 3px; }
+.place .ph { color: var(--muted); font-size: 11.5px; margin-top: 2px; }
+.fav { font-size: 10.5px; font-weight: 800; background: #ff7a33; color: #1a0d05; border-radius: 8px; padding: 1px 6px; margin-left: 6px; vertical-align: 1px; }
+.mine { font-size: 10.5px; color: var(--muted); margin-left: 6px; }
+.ic.chill { background: #12423c; color: #5eead4; } .ic.restaurant { background: #5a2d0c; color: #ffb27a; }
+.ic.marina { background: #0f2f57; color: #8cc2ff; } .ic.public { background: #18401f; color: #8be39b; }
+.legend2 { display: flex; flex-wrap: wrap; gap: 10px; margin: 6px; color: var(--muted); font-size: 12px; }
+.legend2 span { display: inline-flex; gap: 5px; align-items: center; }
+.dot { width: 10px; height: 10px; border-radius: 5px; display: inline-block; }
+.leaflet-container:not(.z14) .dlbl { display: none; }
+@keyframes breathe { 0%,100% { opacity: .55 } 50% { opacity: 1 } }
+.favglow { animation: breathe 2.4s ease-in-out infinite; }
+@media (max-width: 760px) {
+  #app { grid-template-columns: 1fr; grid-template-rows: 45vh 1fr; }
+  #map { grid-row: 1; } #side { grid-row: 2; border-right: none; border-top: 1px solid var(--line); }
+}
+</style>
+</head>
+<body>
+<div id="app">
+  <aside id="side">
+    <header>
+      <h1>Trips worth doing again and again</h1>
+      <div class="sub">The outings Bay locals keep going back to, starting from Pier 40. Ranked by how repeatable and fun
+        they are for you, not by how famous they are. · <a href="index.html">Navigator &amp; lessons →</a></div>
+      <nav class="tabs"><button class="tab on" data-tab="trips">Trips</button><button class="tab" data-tab="places">Docks &amp; chill spots</button></nav>
+    </header>
+    <div class="list" id="list"></div>
+    <div id="detail"></div>
+    <div id="places" style="display:none"></div>
+  </aside>
+  <div id="map"></div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Turf.js/6.5.0/turf.min.js"></script>
+<script>
+'use strict';
+const P40 = [37.7814, -122.3867];
+const ICON = { dock: '⚓︎', anchor: '⚓', view: '👁' };
+const ICON_TXT = { dock: 'D', anchor: '⚓', view: '★' };
+const map = L.map('map', { zoomControl: false }).setView([37.83, -122.43], 12);
+L.control.zoom({ position: 'topright' }).addTo(map);
+L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+  attribution: 'Esri, HERE, Garmin, © OpenStreetMap · NOAA', maxZoom: 19, maxNativeZoom: 16 }).addTo(map);
+L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Reference/MapServer/tile/{z}/{y}/{x}', {
+  maxZoom: 19, maxNativeZoom: 16, opacity: 0.7 }).addTo(map);
+map.createPane('heat').classList.add('leaflet-heat-pane');
+map.getPane('heat').style.zIndex = 420;
+const heatRenderer = L.svg({ pane: 'heat' });
+const heatLayer = L.layerGroup().addTo(map);
+const focusLayer = L.layerGroup().addTo(map);
+
+let TRIPS = [], ZONES = null, ENC = null, sel = null, raf = null;
+
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const fmtH = h => h < 1 ? `${Math.round(h * 60)} min` : `${Math.floor(h)}h ${String(Math.round((h % 1) * 60)).padStart(2, '0')}`;
+
+function drawHeat(dim) {
+  heatLayer.clearLayers();
+  for (const t of TRIPS) {
+    const w = 1.5 + t.pop * 0.9;
+    // soft glow + bright core; screen blending makes overlapping routes glow hotter, like a heatmap
+    L.polyline(t.route, { renderer: heatRenderer, color: '#ff4d1a', weight: w * 4, opacity: dim ? 0.05 : 0.12, interactive: false, lineJoin: 'round' }).addTo(heatLayer);
+    L.polyline(t.route, { renderer: heatRenderer, color: '#ff7a33', weight: w, opacity: dim ? 0.18 : 0.5, interactive: false, lineJoin: 'round' }).addTo(heatLayer);
+    if (!dim) L.polyline(t.route, { renderer: heatRenderer, color: 'transparent', weight: 16, opacity: 0 })
+      .on('click', () => openTrip(t.id)).bindTooltip(t.name, { sticky: true, className: 'lbl' }).addTo(heatLayer);
+  }
+  L.circleMarker(P40, { radius: 6, color: '#fff', weight: 2, fillColor: '#4fa3ff', fillOpacity: 1 })
+    .bindTooltip('Pier 40 (start)', { permanent: true, direction: 'right', offset: [8, 0], className: 'lbl' }).addTo(heatLayer);
+}
+
+function renderList() {
+  document.getElementById('list').innerHTML = TRIPS.map((t, i) => `
+    <button class="trip ${sel === t.id ? 'on' : ''}" data-id="${t.id}">
+      <div class="rank">${i + 1}</div>
+      <div><div class="tname">${esc(t.name)}</div>
+        <div class="meta">${esc(t.kind)} · ${t.nm} nm · ${esc(t.hours)}<span class="lvl ${t.level}">${t.level}</span></div></div>
+      <div class="heat" title="how much locals do it on repeat">${[1, 2, 3, 4, 5].map(k => `<i class="${k <= t.pop ? 'f' : ''}"></i>`).join('')}</div>
+    </button>`).join('');
+  document.querySelectorAll('.trip').forEach(b => {
+    b.onclick = () => openTrip(b.dataset.id);
+    b.onmouseenter = () => !sel && preview(b.dataset.id);
+    b.onmouseleave = () => !sel && focusLayer.clearLayers();
+  });
+}
+
+function preview(id) {
+  const t = TRIPS.find(x => x.id === id);
+  focusLayer.clearLayers();
+  L.polyline(t.route, { color: '#ffd27a', weight: 4, opacity: 0.95 }).addTo(focusLayer);
+}
+
+function crossings(t) {
+  const line = turf.lineString(t.route.map(([la, lo]) => [lo, la]));
+  const out = [];
+  if (ZONES) for (const f of ZONES.features) {
+    const p = f.properties;
+    const geom = f.geometry.type === 'Point' ? turf.circle(f.geometry.coordinates, p.r / 1000, { units: 'kilometers' }) : f;
+    if (turf.booleanIntersects(line, geom)) out.push({ cls: p.kind === 'rough' ? 'r' : p.kind === 'moderate' ? 'y' : 'g', kind: p.kind, txt: p.name });
+  }
+  if (ENC) {
+    const names = new Set();
+    for (const f of ENC.lanes.features) if (turf.booleanIntersects(line, f))
+      names.add((f.properties.INFORM || 'Ship traffic lane').replace(/\s*\(33 CFR.*\)/, '').replace(/Main Ship Channel /i, ''));
+    for (const n of names) out.push({ cls: 'm', kind: 'lane', txt: n });
+    if (ENC.precaution.features.some(f => turf.booleanIntersects(line, f))) out.push({ cls: 'm', kind: 'prec', txt: 'Precautionary area (ships turning and merging)' });
+  }
+  return out;
+}
+
+function openTrip(id) {
+  const t = TRIPS.find(x => x.id === id);
+  sel = id;
+  renderList();
+  document.getElementById('list').style.display = 'none';
+  drawHeat(true);
+  focusLayer.clearLayers();
+  L.polyline(t.route, { color: '#ff7a33', weight: 10, opacity: 0.25, lineJoin: 'round' }).addTo(focusLayer);
+  L.polyline(t.route, { color: '#ffd27a', weight: 3.5, opacity: 1, lineJoin: 'round' }).addTo(focusLayer);
+  // direction chevrons
+  const line = turf.lineString(t.route.map(([la, lo]) => [lo, la]));
+  const len = turf.length(line, { units: 'nauticalmiles' });
+  for (let d = 0.6; d < len; d += Math.max(0.9, len / 14)) {
+    const a = turf.along(line, d, { units: 'nauticalmiles' }), b = turf.along(line, Math.min(len, d + 0.05), { units: 'nauticalmiles' });
+    const brg = turf.bearing(a, b);
+    L.marker([a.geometry.coordinates[1], a.geometry.coordinates[0]], { interactive: false, icon: L.divIcon({ className: 'boat', iconSize: [14, 14], iconAnchor: [7, 7],
+      html: `<svg width="14" height="14" viewBox="-7 -7 14 14" style="transform:rotate(${brg}deg)"><path d="M-4,3 L0,-4 L4,3" fill="none" stroke="#ffd27a" stroke-width="2"/></svg>` }) }).addTo(focusLayer);
+  }
+  t.stops.forEach((s, i) => {
+    const color = { dock: '#1f6feb', anchor: '#8957e5', view: '#3a4654' }[s.type];
+    L.marker(s.at, { icon: L.divIcon({ className: 'pin', iconSize: [26, 26], iconAnchor: [13, 13],
+      html: `<div style="background:${color}">${ICON_TXT[s.type]}</div>` }) })
+      .bindTooltip(s.name, { permanent: true, direction: 'right', offset: [14, 0], className: 'lbl' })
+      .bindPopup(`<b>${esc(s.name)}</b><br>${esc(s.notes)}`).addTo(focusLayer);
+  });
+  map.flyToBounds(L.latLngBounds(t.route).pad(0.12), { duration: 1, paddingTopLeft: [10, 10] });
+  animate(t, line, len);
+
+  const cr = crossings(t);
+  const crossHtml = cr.length ? cr.map(c => `<li class="${c.cls}">${
+      c.kind === 'rough' ? `<b>Often rough:</b> ${esc(c.txt)}` :
+      c.kind === 'moderate' ? `<b>Moderate:</b> ${esc(c.txt)}` :
+      c.kind === 'calm' ? `<b>Sheltered:</b> ${esc(c.txt)}` :
+      c.kind === 'lane' ? `<b>Ship lane:</b> ${esc(c.txt)}` : `<b>Heads up:</b> ${esc(c.txt)}`}</li>`).join('')
+    : '<li>No rough-water zones or ship lanes on this route.</li>';
+  const d = document.getElementById('detail');
+  d.innerHTML = `
+    <button class="back" id="back">← All trips</button>
+    <h2>${esc(t.name)}</h2>
+    <div class="meta">${esc(t.kind)}<span class="lvl ${t.level}">${t.level}</span></div>
+    <div class="stats">
+      <div class="stat"><b>${t.nm} nm</b><span>round trip</span></div>
+      <div class="stat"><b>${fmtH(t.nm / 6)}</b><span>underway at 6 kn</span></div>
+      <div class="stat"><b>${fmtH(t.nm / 15)}</b><span>underway at 15 kn</span></div>
+    </div>
+    <p>${esc(t.summary)}</p>
+    ${t.why ? `<h3>Why locals keep doing it</h3><p>${esc(t.why)}</p>` : ''}
+    ${t.when ? `<h3>Best time</h3><p>${esc(t.when)}</p>` : ''}
+    <div class="meta">Typical outing, including stops: <b>${esc(t.hours)}</b></div>
+    <h3>Stops</h3>
+    ${t.stops.map(s => `<div class="stop"><div class="ic ${s.type}">${ICON_TXT[s.type]}</div>
+      <div><b>${esc(s.name)}</b><p>${esc(s.notes)}</p></div></div>`).join('')}
+    <h3>What you'll pass through</h3>
+    <ul class="cross">${crossHtml}</ul>
+    <h3>Tips</h3>
+    <ul class="tips">${t.tips.map(x => `<li>${esc(x)}</li>`).join('')}</ul>
+    <div class="src">Routes are drawn to show the usual way people go and are checked against NOAA charted land. They're not
+      a navigation track, so follow your chart, depth sounder, and the rules of the road. Stop details from
+      <a href="https://www.latitude38.com/features/daysail.html" target="_blank">Latitude 38 "Perfect Daysail"</a>,
+      <a href="https://boatingsf.com/halibut-fishing-near-san-francisco/" target="_blank">BoatingSF halibut guide</a>,
+      <a href="https://modernsailing.com/article/san-francisco-bay-dock-and-dine-locations" target="_blank">Modern Sailing</a>,
+      <a href="https://boatingsf.com/?p=115" target="_blank">BoatingSF</a>,
+      <a href="https://www.latitude38.com/lectronic/clipper-cove-anchoring-permits/" target="_blank">Latitude 38</a>,
+      <a href="https://sfport.com/safe-boating-regulations-mccovey-cove" target="_blank">Port of SF</a>,
+      <a href="https://rbra.ca.gov/anchoring-in-the-bay" target="_blank">RBRA</a>. Fees and rules change, so call ahead.</div>`;
+  d.classList.add('show');
+  document.getElementById('side').scrollTop = 0;
+  document.getElementById('back').onclick = closeTrip;
+}
+
+function closeTrip() {
+  sel = null;
+  cancelAnimationFrame(raf);
+  focusLayer.clearLayers();
+  document.getElementById('detail').classList.remove('show');
+  document.getElementById('list').style.display = '';
+  renderList();
+  drawHeat(false);
+  map.flyTo([37.83, -122.43], 12, { duration: 1 });
+}
+
+function animate(t, line, len) {
+  cancelAnimationFrame(raf);
+  const m = L.marker(t.route[0], { interactive: false, zIndexOffset: 1000, icon: L.divIcon({ className: 'boat', iconSize: [24, 24], iconAnchor: [12, 12],
+    html: `<div class="b" style="width:24px;height:24px"><svg width="24" height="24" viewBox="-12 -12 24 24"><path d="M0,-10 L5,-2 L4,9 L-4,9 L-5,-2Z" fill="#4fa3ff" stroke="#fff" stroke-width="1.5"/>
+      <circle cx="-3.7" cy="-2" r="1.6" fill="#ff4d4d"/><circle cx="3.7" cy="-2" r="1.6" fill="#2fcf6f"/></svg></div>` }) }).addTo(focusLayer);
+  const secs = Math.min(40, Math.max(8, len * 2.4)), t0 = performance.now();
+  const tick = now => {
+    const f = ((now - t0) / 1000 / secs) % 1;
+    const d = f * len;
+    const a = turf.along(line, d, { units: 'nauticalmiles' }), b = turf.along(line, Math.min(len, d + 0.03), { units: 'nauticalmiles' });
+    m.setLatLng([a.geometry.coordinates[1], a.geometry.coordinates[0]]);
+    const el = m.getElement()?.querySelector('.b');
+    if (el) el.style.transform = `rotate(${turf.bearing(a, b)}deg)`;
+    raf = requestAnimationFrame(tick);
+  };
+  raf = requestAnimationFrame(tick);
+}
+
+// ------------------------------------------------------------ places
+const placesLayer = L.layerGroup();
+let PLACES = null;
+const DOCK_STYLE = { restaurant: ['#ff8a3d', '🍴', 'Restaurant dock'], marina: ['#4fa3ff', 'M', 'Marina guest slips'], public: ['#3fcf6f', 'P', 'Public / park dock'] };
+const placeMarkers = {};
+
+function buildPlaces() {
+  placesLayer.clearLayers();
+  for (const c of PLACES.chill) {
+    const glow = L.circle(c.at, { radius: c.r * 1.6, stroke: false, fillColor: '#2dd4bf', fillOpacity: 0.08, interactive: false, className: c.fav ? 'favglow' : '' }).addTo(placesLayer);
+    const m = L.circle(c.at, { radius: c.r, color: c.fav ? '#ffb27a' : '#2dd4bf', weight: c.fav ? 2.5 : 1.5, dashArray: c.fav ? null : '4 5',
+      fillColor: '#2dd4bf', fillOpacity: 0.18 }).addTo(placesLayer);
+    m.bindTooltip((c.fav ? '★ ' : '') + c.name, { permanent: true, direction: 'top', className: 'lbl', offset: [0, -4] });
+    m.bindPopup(`<b>${esc(c.name)}</b>${c.fav ? ' <span class="fav">FAVORITE</span>' : ''}<br><span style="color:#5eead4">Good:</span> ${esc(c.good)}
+      <br><span style="color:#f5c542">Watch out:</span> ${esc(c.watch)}${c.extra ? `<br><span class="meta">${esc(c.extra)}</span>` : ''}`);
+    placeMarkers['c:' + c.id] = m;
+  }
+  PLACES.docks.forEach((d, i) => {
+    const [col, ch] = DOCK_STYLE[d.type];
+    const m = L.marker(d.at, { icon: L.divIcon({ className: 'pin', iconSize: [24, 24], iconAnchor: [12, 12],
+      html: `<div style="background:${col};width:24px;height:24px;font-size:11px;font-weight:800;color:#0b0f14">${ch}</div>` }) }).addTo(placesLayer);
+    m.bindTooltip(d.name, { permanent: true, direction: 'right', offset: [12, 0], className: 'lbl dlbl' });
+    m.bindPopup(`<b>${esc(d.name)}</b><br><span class="meta">${DOCK_STYLE[d.type][2]} · ${esc(d.area)}</span><br>${esc(d.how)}<br><span class="meta">${esc(d.contact)}</span>`);
+    placeMarkers['d:' + i] = m;
+  });
+  L.circleMarker(P40, { radius: 6, color: '#fff', weight: 2, fillColor: '#4fa3ff', fillOpacity: 1 })
+    .bindTooltip('Pier 40 (home)', { permanent: true, direction: 'left', offset: [-8, 0], className: 'lbl' }).addTo(placesLayer);
+}
+
+function renderPlaces() {
+  const areas = [...new Set(PLACES.docks.map(d => d.area))];
+  const chillHtml = PLACES.chill.map(c => `
+    <button class="place" data-k="c:${c.id}"><div class="ic chill">~</div>
+      <div><b>${esc(c.name)}</b>${c.fav ? '<span class="fav">FAVORITE</span>' : ''}${c.src === 'yours' ? '<span class="mine">your notes</span>' : ''}
+        <div class="good">${esc(c.good)}</div><div class="watch">⚠ ${esc(c.watch)}</div></div></button>`).join('');
+  const dockHtml = areas.map(a => `<h3>Dock · ${esc(a)}</h3>` + PLACES.docks.map((d, i) => d.area !== a ? '' : `
+    <button class="place" data-k="d:${i}"><div class="ic ${d.type}">${DOCK_STYLE[d.type][1]}</div>
+      <div><b>${esc(d.name)}</b><div class="how">${esc(d.how)}</div><div class="ph">${esc(d.contact)}</div></div></button>`).join('')).join('');
+  document.getElementById('places').innerHTML = `
+    <div class="legend2"><span><i class="dot" style="background:#2dd4bf"></i>chill spot</span>
+      <span><i class="dot" style="background:#ff8a3d"></i>restaurant dock</span><span><i class="dot" style="background:#4fa3ff"></i>marina guest slips</span>
+      <span><i class="dot" style="background:#3fcf6f"></i>public dock</span></div>
+    <h3>Places to chill</h3>${chillHtml}${dockHtml}
+    <div class="src">Chill-spot notes marked "your notes" are yours. Others come from local guides. Docks come from
+      <a href="https://boatingsf.com/listings/guest-docks" target="_blank">BoatingSF's guest-dock list</a>,
+      <a href="https://www.latitude38.com/lectronic/sail-in-dining-on-the-bay/" target="_blank">Latitude 38 sail-in dining</a> and
+      <a href="https://modernsailing.com/article/san-francisco-bay-dock-and-dine-locations" target="_blank">Modern Sailing</a>;
+      locations from OpenStreetMap. Restaurants and dock policies change, so call ahead.</div>`;
+  document.querySelectorAll('.place').forEach(b => b.onclick = () => {
+    document.querySelectorAll('.place').forEach(x => x.classList.toggle('on', x === b));
+    const m = placeMarkers[b.dataset.k];
+    const ll = m.getLatLng();
+    map.flyTo(ll, b.dataset.k.startsWith('c:') ? 15 : 16, { duration: 0.9 });
+    setTimeout(() => m.openPopup(), 950);
+  });
+}
+
+function showTab(which) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.toggle('on', t.dataset.tab === which));
+  const isPlaces = which === 'places';
+  document.getElementById('places').style.display = isPlaces ? '' : 'none';
+  if (isPlaces) {
+    cancelAnimationFrame(raf);
+    focusLayer.clearLayers(); heatLayer.clearLayers();
+    document.getElementById('list').style.display = 'none';
+    document.getElementById('detail').classList.remove('show');
+    map.addLayer(placesLayer);
+    map.flyTo([37.835, -122.42], 12, { duration: 0.9 });
+  } else {
+    map.removeLayer(placesLayer);
+    sel = null;
+    document.getElementById('list').style.display = '';
+    renderList(); drawHeat(false);
+    map.flyTo([37.83, -122.43], 12, { duration: 0.9 });
+  }
+}
+document.querySelectorAll('.tab').forEach(t => t.onclick = () => showTab(t.dataset.tab));
+map.on('zoomend', () => map.getContainer().classList.toggle('z14', map.getZoom() >= 14));
+
+(async () => {
+  PLACES = await (await fetch('data/places.json')).json();
+  buildPlaces(); renderPlaces();
+  TRIPS = (await (await fetch('data/trips.json')).json()).sort((a, b) => b.pop - a.pop);
+  renderList();
+  drawHeat(false);
+  try { ZONES = await (await fetch('data/zones.json')).json(); } catch { /* optional */ }
+  try { ENC = await (await fetch('data/enc.json')).json(); } catch { /* optional */ }
+  const id = location.hash.slice(1);
+  if (id && TRIPS.some(t => t.id === id)) openTrip(id);
+  if (id === 'places') showTab('places');
+})();
+window.addEventListener('hashchange', () => { const id = location.hash.slice(1); if (id === 'places') showTab('places'); else if (TRIPS.some(t => t.id === id)) openTrip(id); });
+</script>
+</body>
+</html>

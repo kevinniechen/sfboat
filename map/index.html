@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SF Bay Navigator</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="map"></div>
+
+<aside id="panel">
+  <header>
+    <h1>SF Bay Navigator</h1>
+    <button id="collapse" title="Hide panel">‹</button>
+  </header>
+  <nav class="tabs"><button class="tab on" data-tab="learn">Learn</button><button class="tab" data-tab="explore">Explore</button><a class="tab" href="trips.html" style="text-align:center;text-decoration:none;color:inherit;padding:5px 10px;border:1px solid #2e4360;border-radius:8px;background:#1b2a3d">Trips</a></nav>
+  <div id="learn"></div>
+  <div id="explore">
+
+  <section>
+    <h2>Time</h2>
+    <div id="timeLabel" class="big">—</div>
+    <input id="time" type="range" min="-720" max="2160" step="10" value="0">
+    <div class="row">
+      <button id="now">Now</button>
+      <button id="play">▶ Play</button>
+      <span id="curStatus" class="muted">loading currents…</span>
+    </div>
+    <div id="gate" class="card"></div>
+  </section>
+
+  <section>
+    <h2>Layers</h2>
+    <label><input type="checkbox" data-layer="zones" checked> Calm vs rough water (typical)</label>
+    <label><input type="checkbox" data-layer="ferries" checked> Ferry routes</label>
+    <label><input type="checkbox" data-layer="chart"> Official NOAA chart</label>
+    <label><input type="checkbox" data-layer="currents" checked> Tidal current (predicted)</label>
+    <label><input type="checkbox" data-layer="ships" checked> Live ships (AIS)</label>
+    <label><input type="checkbox" data-layer="lanes" checked> Ship traffic lanes + direction</label>
+    <label><input type="checkbox" data-layer="channels" checked> Dredged channels &amp; fairways</label>
+    <label><input type="checkbox" data-layer="buoys" checked> Buoys &amp; markers</label>
+    <label><input type="checkbox" data-layer="hazards" checked> Rocks, wrecks, obstructions</label>
+    <label><input type="checkbox" data-layer="areas"> Restricted &amp; anchorage areas</label>
+    <div id="shipStatus" class="card muted"></div>
+  </section>
+
+  <section>
+    <h2>Plan a route</h2>
+    <div class="row">
+      <button id="routeBtn">✎ Draw route</button>
+      <button id="routeClear">Clear</button>
+      <label class="inline">boat speed <input id="speed" type="number" value="6" min="1" max="40" step="0.5"> kn</label>
+    </div>
+    <p class="muted small">Click the map to add waypoints and double-click to finish. The route is checked against
+      ship lanes, hazards, and the predicted current at the selected time.</p>
+    <div id="routeOut"></div>
+  </section>
+
+  <section>
+    <h2>How to read this</h2>
+    <div class="legend">
+      <div><span class="sw" style="background:rgba(255,90,90,.25);border:1.5px dashed #ff5a5a"></span><b>Often rough.</b> Strong current and/or wind. Avoid as a beginner.</div>
+      <div><span class="sw" style="background:rgba(47,207,111,.25);border:1.5px dashed #2fcf6f"></span><b>Usually calm / sheltered.</b> Good practice water.</div>
+      <div><span class="sw" style="border-top:3px solid #4fa3ff;height:0;margin-top:9px"></span><b>Ferry route.</b> Fast boats, 25–35 kn. Dashed lines are seasonal / event-day routes.</div>
+      <div><span class="sw lane"></span><b>Ship traffic lane.</b> Arrows show the direction ships travel in it. Stay out, or cross quickly at a right angle and behind ships.</div>
+      <div><span class="sw prec"></span><b>Precautionary area.</b> Ships merge and turn here. Be extra alert.</div>
+      <div><span class="sw dredge"></span><b>Dredged channel.</b> Deep water kept open for big ships. They can't leave it, so you must not impede them.</div>
+      <div><span class="sym nun"></span><b>Red marker (even number).</b> Keep it on your <b>right</b> when <i>returning</i> (coming in from sea or heading upstream).</div>
+      <div><span class="sym can"></span><b>Green marker (odd number).</b> Keep it on your <b>left</b> when returning.</div>
+      <div><span class="sym other"></span>Other marks (safe water, danger, special). Click one for details.</div>
+      <div><span class="sym rock">+</span>Rock, wreck or obstruction. Give it room.</div>
+      <div><span class="sym cur">➤</span><b>Current.</b> Arrow points the way the water flows; length and color show speed.</div>
+      <div><span class="sym ship">▲</span><b>Live ship.</b> The line ahead shows where it will be in 10 minutes.</div>
+    </div>
+    <p class="muted small">Away from channels (for example, leaving Pier 40) there's usually no lane to follow. Go by the
+      chart depth, the rules of the road, and the current. Red/green only matter where there's a marked channel.</p>
+    <p class="muted small">Data: NOAA ENC charts, NOAA CO-OPS current predictions, aisstream.io. Not for navigation:
+      always cross-check with official charts, a proper chart plotter, and your eyes.</p>
+  </section>
+  </div>
+</aside>
+<button id="expand" title="Show panel">›</button>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Turf.js/6.5.0/turf.min.js"></script>
+<script src="app.js"></script>
+<script src="learn.js"></script>
+</body>
+</html>

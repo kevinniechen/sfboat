@@ -1,0 +1,1343 @@
+[
+{
+"id": "clipper-cove",
+"name": "Clipper Cove hangout",
+"pop": 5,
+"level": "beginner+",
+"hours": "2\u20134 hrs (or overnight)",
+"kind": "Your backyard anchorage",
+"summary": "The local favorite anchorage, and the closest one to you: a short hop around Yerba Buena Island into a calm cove with the skyline in front of you. Drop the hook, raft up with friends, swim if you're brave, and stay for the Bay Bridge lights after dark.",
+"why": "Close, calm even when the Central Bay is howling, and different every time: busy raft-ups on weekends, nearly empty midweek. Locals pick it as a top overnight spot for the night view of the bridge and the city.",
+"when": "Any day. Enter near high tide (shallow entrance). Weekday evenings are quiet; weekends are social.",
+"route": [
+[
+37.7808,
+-122.3858
+],
+[
+37.7819,
+-122.3847
+],
+[
+37.7826,
+-122.3845
+],
+[
+37.7829,
+-122.3818
+],
+[
+37.784,
+-122.379
+],
+[
+37.793,
+-122.365
+],
+[
+37.803,
+-122.351
+],
+[
+37.812,
+-122.3505
+],
+[
+37.816,
+-122.356
+],
+[
+37.8155,
+-122.369
+],
+[
+37.816,
+-122.356
+],
+[
+37.812,
+-122.3505
+],
+[
+37.803,
+-122.351
+],
+[
+37.793,
+-122.365
+],
+[
+37.784,
+-122.379
+],
+[
+37.7829,
+-122.3818
+],
+[
+37.7826,
+-122.3845
+],
+[
+37.7819,
+-122.3847
+],
+[
+37.7808,
+-122.3858
+]
+],
+"stops": [
+{
+"at": [
+37.8155,
+-122.369
+],
+"name": "Clipper Cove anchorage",
+"type": "anchor",
+"notes": "Protected on three sides, 12\u201318 ft with a mud/sand bottom (good holding). Enter at or near high tide, and beware the shoal on the north side of the entrance. No permit for a stay under 24 hours."
+}
+],
+"tips": [
+"You cross the Oakland ship channel area near the Bay Bridge. Look hard for ships turning toward Oakland.",
+"Sheltered from the afternoon westerly, which makes it a good plan B when the Slot is too windy."
+],
+"nm": 7.3
+},
+{
+"id": "daysail-loop",
+"name": "The locals' Central Bay loop",
+"pop": 5,
+"level": "intermediate",
+"hours": "4\u20135 hrs",
+"kind": "Just go boating",
+"summary": "No destination, just the best of the Bay in the right order. Leave around 11 as the fog burns off, go up the back side of Angel Island, through Raccoon Strait, along the Sausalito waterfront and Yellow Bluff, then ride the afternoon breeze back along the city front.",
+"why": "This is the classic local daysail, the route Latitude 38 recommends instead of learning it by trial and error. It works with the Bay's daily rhythm: you go upwind while it's light and come home downwind when it's strong.",
+"when": "Late morning start. The breeze peaks around 2\u20133 pm. Check the current: Raccoon Strait is easier with the flood.",
+"route": [
+[
+37.7808,
+-122.3858
+],
+[
+37.7819,
+-122.3847
+],
+[
+37.7826,
+-122.3845
+],
+[
+37.7829,
+-122.3818
+],
+[
+37.784,
+-122.379
+],
+[
+37.7935,
+-122.3835
+],
+[
+37.801,
+-122.3895
+],
+[
+37.808,
+-122.3965
+],
+[
+37.8135,
+-122.406
+],
+[
+37.815,
+-122.418
+],
+[
+37.824,
+-122.412
+],
+[
+37.835,
+-122.405
+],
+[
+37.85,
+-122.415
+],
+[
+37.859,
+-122.41
+],
+[
+37.868,
+-122.411
+],
+[
+37.8728,
+-122.42
+],
+[
+37.8738,
+-122.433
+],
+[
+37.869,
+-122.447
+],
+[
+37.8625,
+-122.4535
+],
+[
+37.857,
+-122.462
+],
+[
+37.858,
+-122.4745
+],
+[
+37.85,
+-122.47
+],
+[
+37.842,
+-122.468
+],
+[
+37.8365,
+-122.4665
+],
+[
+37.827,
+-122.47
+],
+[
+37.813,
+-122.474
+],
+[
+37.8115,
+-122.46
+],
+[
+37.8125,
+-122.442
+],
+[
+37.814,
+-122.43
+],
+[
+37.815,
+-122.418
+],
+[
+37.8135,
+-122.406
+],
+[
+37.808,
+-122.3965
+],
+[
+37.801,
+-122.3895
+],
+[
+37.7935,
+-122.3835
+],
+[
+37.784,
+-122.379
+],
+[
+37.7829,
+-122.3818
+],
+[
+37.7826,
+-122.3845
+],
+[
+37.7819,
+-122.3847
+],
+[
+37.7808,
+-122.3858
+]
+],
+"stops": [
+{
+"at": [
+37.8595,
+-122.4095
+],
+"name": "Lee side of Angel Island (east shore)",
+"type": "view",
+"notes": "The warmest, calmest spot on the loop, good for a break if your crew is cold."
+},
+{
+"at": [
+37.8365,
+-122.4665
+],
+"name": "Yellow Bluff",
+"type": "view",
+"notes": "The wind gets fluky hugging the Sausalito shore. From here you can see straight out the Gate."
+},
+{
+"at": [
+37.813,
+-122.474
+],
+"name": "Fort Point (turnaround)",
+"type": "view",
+"notes": "Optional extension under the Golden Gate, only at slack or a moderate flood. On a small boat, don't get caught on a strong ebb that carries you out to sea."
+}
+],
+"tips": [
+"Go counterclockwise: upwind in the light morning air, downwind in the strong afternoon breeze.",
+"Watch for gusts coming out of the lee of the islands and the headlands.",
+"Want lunch? Stop at Ayala Cove or Sausalito along the way."
+],
+"nm": 18.9
+},
+{
+"id": "sunset-cityfront",
+"name": "After-work sunset run",
+"pop": 5,
+"level": "beginner+",
+"hours": "1.5\u20132 hrs",
+"kind": "Evening cruise",
+"summary": "Out the north door, up the Embarcadero past the Ferry Building, Pier 39 and Aquatic Park, and back as the sun drops behind the Golden Gate. On summer Friday nights you'll share the city front with beer-can racers.",
+"why": "Short enough for a weeknight, beautiful every single time, and never far from home. Friday-night beer-can racing is a decades-old Bay tradition, and the city front is where you see it.",
+"when": "Summer evenings. The wind usually eases toward sunset. Bring layers: it gets cold fast.",
+"route": [
+[
+37.7808,
+-122.3858
+],
+[
+37.7819,
+-122.3847
+],
+[
+37.7826,
+-122.3845
+],
+[
+37.7829,
+-122.3818
+],
+[
+37.784,
+-122.379
+],
+[
+37.7935,
+-122.3835
+],
+[
+37.801,
+-122.3895
+],
+[
+37.808,
+-122.3965
+],
+[
+37.8135,
+-122.406
+],
+[
+37.815,
+-122.418
+],
+[
+37.814,
+-122.43
+],
+[
+37.815,
+-122.418
+],
+[
+37.8135,
+-122.406
+],
+[
+37.808,
+-122.3965
+],
+[
+37.801,
+-122.3895
+],
+[
+37.7935,
+-122.3835
+],
+[
+37.784,
+-122.379
+],
+[
+37.7829,
+-122.3818
+],
+[
+37.7826,
+-122.3845
+],
+[
+37.7819,
+-122.3847
+],
+[
+37.7808,
+-122.3858
+]
+],
+"stops": [
+{
+"at": [
+37.814,
+-122.43
+],
+"name": "Off Aquatic Park (turnaround)",
+"type": "view",
+"notes": "Golden Gate sunset view. Aquatic Park itself is for swimmers; stay outside the breakwater."
+},
+{
+"at": [
+37.808,
+-122.3965
+],
+"name": "City front piers",
+"type": "view",
+"notes": "Ferries come and go from the Ferry Building and Pier 41. Keep a sharp lookout."
+}
+],
+"tips": [
+"Give racing sailboats room. They can't easily change course mid-race.",
+"Coming home after dark? Practice it first. Red, right, returning works at night too: look for the lights."
+],
+"nm": 7.6
+},
+{
+"id": "angel-ayala",
+"name": "Angel Island picnic & hike",
+"pop": 4,
+"level": "intermediate",
+"hours": "5\u20136 hrs",
+"kind": "Dock & explore",
+"summary": "Tie up in Ayala Cove, then hike up Mt. Livermore or picnic in the park. Head home down the island's east side with the afternoon breeze behind you.",
+"why": "Locals go back over and over: it's a state park you can only really get to by boat, with the Bay's biggest public docks, and it's well protected once you're in.",
+"when": "Go early: the docks fill up on summer weekends. Slips are open 8 am to sunset.",
+"route": [
+[
+37.7808,
+-122.3858
+],
+[
+37.7819,
+-122.3847
+],
+[
+37.7826,
+-122.3845
+],
+[
+37.7829,
+-122.3818
+],
+[
+37.784,
+-122.379
+],
+[
+37.7935,
+-122.3835
+],
+[
+37.801,
+-122.3895
+],
+[
+37.808,
+-122.3965
+],
+[
+37.8135,
+-122.406
+],
+[
+37.815,
+-122.418
+],
+[
+37.829,
+-122.44
+],
+[
+37.845,
+-122.456
+],
+[
+37.857,
+-122.462
+],
+[
+37.8625,
+-122.4535
+],
+[
+37.869,
+-122.447
+],
+[
+37.8715,
+-122.44
+],
+[
+37.87,
+-122.4362
+],
+[
+37.8715,
+-122.44
+],
+[
+37.8738,
+-122.433
+],
+[
+37.8728,
+-122.42
+],
+[
+37.868,
+-122.411
+],
+[
+37.859,
+-122.41
+],
+[
+37.85,
+-122.415
+],
+[
+37.835,
+-122.405
+],
+[
+37.815,
+-122.395
+],
+[
+37.806,
+-122.388
+],
+[
+37.7935,
+-122.3835
+],
+[
+37.784,
+-122.379
+],
+[
+37.7829,
+-122.3818
+],
+[
+37.7826,
+-122.3845
+],
+[
+37.7819,
+-122.3847
+],
+[
+37.7808,
+-122.3858
+]
+],
+"stops": [
+{
+"at": [
+37.87,
+-122.4362
+],
+"name": "Ayala Cove, Angel Island State Park",
+"type": "dock",
+"notes": "Day-use slips (fee, self-pay) and moorings. Caf\u00e9, picnic areas, trails. No one may stay on the island after sunset."
+}
+],
+"tips": [
+"Raccoon Strait has strong current. Time it with the tide.",
+"China Cove, just east of Ayala, and Quarry Beach on the east side are quieter lunch anchors."
+],
+"nm": 15.7
+},
+{
+"id": "mccovey",
+"name": "Giants game in McCovey Cove",
+"pop": 4,
+"level": "beginner",
+"hours": "game length",
+"kind": "Event (all season)",
+"summary": "Out the south door of your harbor and into the cove behind right field. Float with the kayaks, listen to the crowd, and wait for a splash hit.",
+"why": "It's two minutes from your slip, there are 81 home games a year, and it never gets old.",
+"when": "Home games. Boats may anchor up to 2 hours before first pitch and must leave soon after the game.",
+"route": [
+[
+37.7795,
+-122.3852
+],
+[
+37.7784,
+-122.3852
+],
+[
+37.7776,
+-122.3858
+],
+[
+37.7772,
+-122.387
+],
+[
+37.7768,
+-122.3885
+]
+],
+"stops": [
+{
+"at": [
+37.7768,
+-122.3885
+],
+"name": "McCovey Cove",
+"type": "anchor",
+"notes": "No-wake, minimum speed, no overnight anchoring. Packed with kayaks, so go dead slow."
+}
+],
+"tips": [
+"Big fenders if you'll raft up, and a long-handled net for home-run balls.",
+"Check the Port of SF's McCovey Cove rules before you go."
+],
+"nm": 0.3
+},
+{
+"id": "halibut-south",
+"name": "Halibut drift off Hunters Point",
+"pop": 4,
+"level": "beginner+",
+"hours": "3\u20135 hrs",
+"kind": "Fishing",
+"summary": "Cruise south along the quieter southern waterfront to the flats off Hunters Point and drift for halibut. It's away from the ship lanes and the Slot, and it's the nearest good fishing ground to Pier 40.",
+"why": "Fishing is one of the main things locals do with small powerboats, and the east shore from Hunters Point south is a well-known halibut area. Every trip is different, and it teaches you to read current and depth.",
+"when": "Roughly April\u2013October, best with live bait (May onward). Calmer in the morning.",
+"route": [
+[
+37.7795,
+-122.3852
+],
+[
+37.7784,
+-122.3852
+],
+[
+37.7776,
+-122.3858
+],
+[
+37.778,
+-122.383
+],
+[
+37.776,
+-122.38
+],
+[
+37.772,
+-122.379
+],
+[
+37.76,
+-122.376
+],
+[
+37.748,
+-122.37
+],
+[
+37.74,
+-122.362
+],
+[
+37.733,
+-122.354
+],
+[
+37.718,
+-122.358
+],
+[
+37.733,
+-122.354
+],
+[
+37.74,
+-122.362
+],
+[
+37.748,
+-122.37
+],
+[
+37.76,
+-122.376
+],
+[
+37.772,
+-122.379
+],
+[
+37.776,
+-122.38
+],
+[
+37.778,
+-122.383
+],
+[
+37.7776,
+-122.3858
+],
+[
+37.7784,
+-122.3852
+],
+[
+37.7795,
+-122.3852
+]
+],
+"stops": [
+{
+"at": [
+37.733,
+-122.354
+],
+"name": "Hunters Point flats",
+"type": "anchor",
+"notes": "Drift or troll slowly with live anchovies. California limit: 3 halibut, minimum 22 inches. You need a fishing license."
+},
+{
+"at": [
+37.718,
+-122.358
+],
+"name": "Toward Candlestick",
+"type": "view",
+"notes": "The flats continue south along the shore. Shallow near the shore, so watch your depth."
+}
+],
+"tips": [
+"Check the current: drifting works best on a moderate tide, not a rip.",
+"Anchorage 8A (big ships waiting) is just offshore. Keep your distance."
+],
+"nm": 8.6
+},
+{
+"id": "sausalito",
+"name": "Lunch in Sausalito",
+"pop": 3,
+"level": "intermediate",
+"hours": "4\u20135 hrs",
+"kind": "Dock & dine",
+"summary": "Cross to Sausalito, tie up at a marina restaurant dock, and come back with the breeze behind you.",
+"why": "A reliable crowd-pleaser when you have guests, and it pairs naturally with the Central Bay loop.",
+"when": "Cross in the morning; the Slot builds by early afternoon.",
+"route": [
+[
+37.7808,
+-122.3858
+],
+[
+37.7819,
+-122.3847
+],
+[
+37.7826,
+-122.3845
+],
+[
+37.7829,
+-122.3818
+],
+[
+37.784,
+-122.379
+],
+[
+37.7935,
+-122.3835
+],
+[
+37.801,
+-122.3895
+],
+[
+37.808,
+-122.3965
+],
+[
+37.8135,
+-122.406
+],
+[
+37.815,
+-122.418
+],
+[
+37.829,
+-122.44
+],
+[
+37.845,
+-122.464
+],
+[
+37.8505,
+-122.471
+],
+[
+37.858,
+-122.4745
+],
+[
+37.8625,
+-122.479
+],
+[
+37.8655,
+-122.488
+],
+[
+37.8652,
+-122.4925
+],
+[
+37.8655,
+-122.488
+],
+[
+37.8625,
+-122.479
+],
+[
+37.858,
+-122.4745
+],
+[
+37.848,
+-122.456
+],
+[
+37.836,
+-122.428
+],
+[
+37.815,
+-122.395
+],
+[
+37.806,
+-122.388
+],
+[
+37.7935,
+-122.3835
+],
+[
+37.784,
+-122.379
+],
+[
+37.7829,
+-122.3818
+],
+[
+37.7826,
+-122.3845
+],
+[
+37.7819,
+-122.3847
+],
+[
+37.7808,
+-122.3858
+]
+],
+"stops": [
+{
+"at": [
+37.8652,
+-122.4925
+],
+"name": "Sausalito marinas (guest docks)",
+"type": "dock",
+"notes": "Clipper Yacht Harbor's south dock (Fish Caf\u00e9) and Schoonmaker Point's north dock (Le Garage). Call ahead."
+}
+],
+"tips": [
+"The Sausalito ferry runs the same path. Watch for it.",
+"Slow down inside Richardson Bay: there are no-wake zones."
+],
+"nm": 16.0
+},
+{
+"id": "tiburon-sams",
+"name": "Burgers at Sam's, Tiburon",
+"pop": 3,
+"level": "intermediate",
+"hours": "4\u20135 hrs",
+"kind": "Dock & dine",
+"summary": "Through Raccoon Strait to Sam's Anchor Cafe's guest dock: a perennial local boat-in favorite.",
+"why": "It's the Bay's classic boat-up deck lunch, and you get Raccoon Strait and Angel Island on the way.",
+"when": "Mid to high tide (it's shallow at the dock). Weekday lunches are easier.",
+"route": [
+[
+37.7808,
+-122.3858
+],
+[
+37.7819,
+-122.3847
+],
+[
+37.7826,
+-122.3845
+],
+[
+37.7829,
+-122.3818
+],
+[
+37.784,
+-122.379
+],
+[
+37.7935,
+-122.3835
+],
+[
+37.801,
+-122.3895
+],
+[
+37.808,
+-122.3965
+],
+[
+37.8135,
+-122.406
+],
+[
+37.815,
+-122.418
+],
+[
+37.829,
+-122.44
+],
+[
+37.845,
+-122.456
+],
+[
+37.857,
+-122.462
+],
+[
+37.8625,
+-122.4535
+],
+[
+37.8665,
+-122.4545
+],
+[
+37.8715,
+-122.4555
+],
+[
+37.8665,
+-122.4545
+],
+[
+37.869,
+-122.447
+],
+[
+37.8738,
+-122.433
+],
+[
+37.8728,
+-122.42
+],
+[
+37.868,
+-122.411
+],
+[
+37.859,
+-122.41
+],
+[
+37.85,
+-122.415
+],
+[
+37.835,
+-122.405
+],
+[
+37.815,
+-122.395
+],
+[
+37.806,
+-122.388
+],
+[
+37.7935,
+-122.3835
+],
+[
+37.784,
+-122.379
+],
+[
+37.7829,
+-122.3818
+],
+[
+37.7826,
+-122.3845
+],
+[
+37.7819,
+-122.3847
+],
+[
+37.7808,
+-122.3858
+]
+],
+"stops": [
+{
+"at": [
+37.8715,
+-122.4555
+],
+"name": "Sam's Anchor Cafe, Tiburon",
+"type": "dock",
+"notes": "A guest dock, but shallow at low tide. Some charter fleets don't allow it for that reason."
+}
+],
+"tips": [
+"Raccoon Strait current can be strong. Plan with the current tables."
+],
+"nm": 16.0
+},
+{
+"id": "jack-london",
+"name": "Windy-day estuary cruise",
+"pop": 3,
+"level": "intermediate",
+"hours": "4\u20135 hrs",
+"kind": "Flat water + dock & dine",
+"summary": "When the Central Bay is too rough, go east instead: cruise up the flat Oakland Estuary and tie up for free at Jack London Square.",
+"why": "It's the locals' plan B. The estuary stays flat when it's blowing 25 knots in the Slot, and there's food at the end.",
+"when": "Any day, but especially windy summer afternoons.",
+"route": [
+[
+37.7808,
+-122.3858
+],
+[
+37.7819,
+-122.3847
+],
+[
+37.7826,
+-122.3845
+],
+[
+37.7829,
+-122.3818
+],
+[
+37.784,
+-122.379
+],
+[
+37.796,
+-122.36
+],
+[
+37.8005,
+-122.35
+],
+[
+37.7995,
+-122.335
+],
+[
+37.797,
+-122.323
+],
+[
+37.795,
+-122.317
+],
+[
+37.7935,
+-122.311
+],
+[
+37.7925,
+-122.3
+],
+[
+37.7925,
+-122.288
+],
+[
+37.7938,
+-122.279
+],
+[
+37.7925,
+-122.288
+],
+[
+37.7925,
+-122.3
+],
+[
+37.7935,
+-122.311
+],
+[
+37.795,
+-122.317
+],
+[
+37.797,
+-122.323
+],
+[
+37.7995,
+-122.335
+],
+[
+37.8005,
+-122.35
+],
+[
+37.796,
+-122.36
+],
+[
+37.784,
+-122.379
+],
+[
+37.7829,
+-122.3818
+],
+[
+37.7826,
+-122.3845
+],
+[
+37.7819,
+-122.3847
+],
+[
+37.7808,
+-122.3858
+]
+],
+"stops": [
+{
+"at": [
+37.7938,
+-122.279
+],
+"name": "Jack London Square guest docks",
+"type": "dock",
+"notes": "Free, first come, first served. Pasta Pelican and Quinn's Lighthouse give free tie-up when you eat there."
+}
+],
+"tips": [
+"The way in follows the Oakland ship channel. Stay at the edge and watch for container ships.",
+"Watch for the Oakland/Alameda ferries in the estuary."
+],
+"nm": 11.1
+},
+{
+"id": "richardson",
+"name": "Lazy afternoon in Richardson Bay",
+"pop": 3,
+"level": "intermediate",
+"hours": "4\u20136 hrs",
+"kind": "Anchor & hang out",
+"summary": "Cross to Sausalito and drop the hook in sheltered Richardson Bay, away from the Central Bay chop.",
+"why": "It's one of the local sailors' favorite anchorages, with calm water and a view of the houseboats and hills.",
+"when": "Cross in the morning; come home with the breeze behind you.",
+"route": [
+[
+37.7808,
+-122.3858
+],
+[
+37.7819,
+-122.3847
+],
+[
+37.7826,
+-122.3845
+],
+[
+37.7829,
+-122.3818
+],
+[
+37.784,
+-122.379
+],
+[
+37.7935,
+-122.3835
+],
+[
+37.801,
+-122.3895
+],
+[
+37.808,
+-122.3965
+],
+[
+37.8135,
+-122.406
+],
+[
+37.815,
+-122.418
+],
+[
+37.829,
+-122.44
+],
+[
+37.845,
+-122.464
+],
+[
+37.8505,
+-122.471
+],
+[
+37.858,
+-122.476
+],
+[
+37.865,
+-122.48
+],
+[
+37.8715,
+-122.484
+],
+[
+37.865,
+-122.48
+],
+[
+37.858,
+-122.476
+],
+[
+37.848,
+-122.456
+],
+[
+37.836,
+-122.428
+],
+[
+37.815,
+-122.395
+],
+[
+37.806,
+-122.388
+],
+[
+37.7935,
+-122.3835
+],
+[
+37.784,
+-122.379
+],
+[
+37.7829,
+-122.3818
+],
+[
+37.7826,
+-122.3845
+],
+[
+37.7819,
+-122.3847
+],
+[
+37.7808,
+-122.3858
+]
+],
+"stops": [
+{
+"at": [
+37.8715,
+-122.484
+],
+"name": "Richardson Bay anchorage",
+"type": "anchor",
+"notes": "Stays up to 72 hours in the designated anchorage. There's no anchoring in the eelgrass zone, small-boat channels, or the Audubon sanctuary, so check the RBRA map."
+}
+],
+"tips": [
+"Shallow outside the channels. Watch your depth sounder."
+],
+"nm": 15.9
+}
+]
