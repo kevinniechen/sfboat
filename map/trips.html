@@ -76,6 +76,7 @@ h3.hc { color: #5eead4; } h3.hd { color: #ffb27a; }
 .on { font-size: 11px; color: #7ce38b; font-weight: 700; } .det { font-size: 11px; color: #9aa7b5; font-weight: 700; }
 .engine { color: var(--muted); font-size: 11.5px; margin: 8px 2px 4px; }
 .lbl.chl { color: #5eead4; }
+.lbl.boatlbl { background: #4fa3ff; color: #04121f; }
 .tabs { display: flex; gap: 6px; margin-top: 12px; }
 .tab { flex: 1; background: #161d26; color: var(--fg); border: 1px solid #2a3542; border-radius: 9px; padding: 7px 8px; cursor: pointer; font: inherit; font-weight: 600; }
 .tab.on { background: #ff7a33; border-color: #ff7a33; color: #1a0d05; }
@@ -240,7 +241,7 @@ function openTrip(id) {
       .bindPopup(`<b>${esc(d.name)}</b><br>${esc(d.how)}<br><span class="meta">${esc(d.contact)}</span>`).addTo(focusLayer);
   }
   map.flyToBounds(L.latLngBounds(t.route).pad(0.12), { duration: 1, paddingTopLeft: [10, 10] });
-  animate(t, line, len);
+  animate(t, line, len, extra);
 
   const cr = crossings(t);
   const crossHtml = cr.length ? cr.map(c => `<li class="${c.cls}">${
@@ -327,19 +328,63 @@ function closeTrip() {
   map.flyTo([37.83, -122.43], 12, { duration: 1 });
 }
 
-function animate(t, line, len) {
+function animate(t, line, len, extra) {
   cancelAnimationFrame(raf);
   const m = L.marker(t.route[0], { interactive: false, zIndexOffset: 1000, icon: L.divIcon({ className: 'boat', iconSize: [24, 24], iconAnchor: [12, 12],
     html: `<div class="b" style="width:24px;height:24px"><svg width="24" height="24" viewBox="-12 -12 24 24"><path d="M0,-10 L5,-2 L4,9 L-4,9 L-5,-2Z" fill="#4fa3ff" stroke="#fff" stroke-width="1.5"/>
       <circle cx="-3.7" cy="-2" r="1.6" fill="#ff4d4d"/><circle cx="3.7" cy="-2" r="1.6" fill="#2fcf6f"/></svg></div>` }) }).addTo(focusLayer);
-  const secs = Math.min(40, Math.max(8, len * 2.4)), t0 = performance.now();
-  const tick = now => {
-    const f = ((now - t0) / 1000 / secs) % 1;
-    const d = f * len;
-    const a = turf.along(line, d, { units: 'nauticalmiles' }), b = turf.along(line, Math.min(len, d + 0.03), { units: 'nauticalmiles' });
+  m.bindTooltip('', { permanent: true, direction: 'right', offset: [14, 0], className: 'lbl boatlbl' });
+  m.closeTooltip();
+
+  // Where the boat stops: the trip's dock/anchor stops, plus chill spots right on the route.
+  const at = ll => turf.nearestPointOnLine(line, turf.point([ll[1], ll[0]]), { units: 'nauticalmiles' }).properties.location;
+  const cands = [
+    ...t.stops.filter(s => s.type === 'dock').map(s => ({ d: at(s.at), secs: 3.2, text: 'Docked · ' + s.name })),
+    ...t.stops.filter(s => s.type === 'anchor').map(s => ({ d: at(s.at), secs: 2.8, text: 'Anchored · ' + s.name })),
+    ...(extra?.chill || []).filter(c => c.off < 0.15).map(c => ({ d: at(c.at), secs: 2.6, text: 'Engine off · ' + c.name })),
+  ].filter(p => p.d > 0.1).sort((a, b) => a.d - b.d);
+  const pauses = [];
+  for (const p of cands) if (!pauses.some(q => Math.abs(q.d - p.d) < 0.2)) pauses.push(p);   // the dock wins over a chill spot at the same place
+
+  const speed = len / Math.min(40, Math.max(8, len * 2.4));        // nm per animation second
+  // timeline: [travel to pause 1][pause 1][travel to pause 2]...[travel to end][short hold at the end]
+  const events = [];
+  let prev = 0;
+  for (const p of pauses) {
+    events.push({ kind: 'move', from: prev, to: Math.min(p.d, len), secs: (Math.min(p.d, len) - prev) / speed });
+    events.push({ kind: 'stop', at: Math.min(p.d, len), secs: p.secs, text: p.text });
+    prev = Math.min(p.d, len);
+  }
+  if (prev < len) events.push({ kind: 'move', from: prev, to: len, secs: (len - prev) / speed });
+  events.push({ kind: 'stop', at: len, secs: 1.0, text: '' });
+  const total = events.reduce((a, e) => a + e.secs, 0);
+
+  let lastText = null, lastBrg = 0;
+  const place = (d, text) => {
+    const a = turf.along(line, d, { units: 'nauticalmiles' });
     m.setLatLng([a.geometry.coordinates[1], a.geometry.coordinates[0]]);
+    if (text === null) {
+      const b = turf.along(line, Math.min(len, d + 0.03), { units: 'nauticalmiles' });
+      if (d < len - 0.01) lastBrg = turf.bearing(a, b);
+    }
     const el = m.getElement()?.querySelector('.b');
-    if (el) el.style.transform = `rotate(${turf.bearing(a, b)}deg)`;
+    if (el) el.style.transform = `rotate(${lastBrg}deg)`;
+    if (text !== lastText) {
+      if (text) { m.setTooltipContent(text); m.openTooltip(); } else m.closeTooltip();
+      lastText = text;
+    }
+  };
+  const t0 = performance.now();
+  const tick = now => {
+    let e = ((now - t0) / 1000) % total;
+    for (const ev of events) {
+      if (e <= ev.secs) {
+        if (ev.kind === 'move') place(ev.from + (ev.to - ev.from) * (ev.secs ? e / ev.secs : 1), null);
+        else place(ev.at, ev.text || null);
+        break;
+      }
+      e -= ev.secs;
+    }
     raf = requestAnimationFrame(tick);
   };
   raf = requestAnimationFrame(tick);
