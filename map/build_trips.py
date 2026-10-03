@@ -68,10 +68,8 @@ TRIPS = [
         "why": "This is the classic local daysail, the route Latitude 38 recommends instead of learning it by trial and error. "
                "It works with the Bay's daily rhythm: you go upwind while it's light and come home downwind when it's strong.",
         "when": "Late morning start. The breeze peaks around 2–3 pm. Check the current: Raccoon Strait is easier with the flood.",
-        "route": r(OUT_NORTH, CITY_FRONT, LOOP_NORTH, SAUSALITO_TO_GATE, list(reversed(TO_GATE)), CITY_FRONT_BACK, IN_NORTH),
+        "route": r(OUT_NORTH, CITY_FRONT, LOOP_NORTH, [(37.858, -122.4745), (37.8625, -122.479), (37.869, -122.4835), (37.8625, -122.479)], SAUSALITO_TO_GATE, list(reversed(TO_GATE)), CITY_FRONT_BACK, IN_NORTH),
         "stops": [
-            {"at": (37.8595, -122.4095), "name": "Lee side of Angel Island (east shore)", "type": "view",
-             "notes": "The warmest, calmest spot on the loop, good for a break if your crew is cold."},
             {"at": (37.8365, -122.4665), "name": "Yellow Bluff", "type": "view",
              "notes": "The wind gets fluky hugging the Sausalito shore. From here you can see straight out the Gate."},
             {"at": (37.8130, -122.4740), "name": "Fort Point (turnaround)", "type": "view",
@@ -91,7 +89,7 @@ TRIPS = [
         "why": "Short enough for a weeknight, beautiful every single time, and never far from home. Friday-night beer-can "
                "racing is a decades-old Bay tradition, and the city front is where you see it.",
         "when": "Summer evenings. The wind usually eases toward sunset. Bring layers: it gets cold fast.",
-        "route": r(OUT_NORTH, CITY_FRONT, [(37.8140, -122.4300)], CITY_FRONT_BACK, IN_NORTH),
+        "route": r(OUT_NORTH, CITY_FRONT, [(37.8140, -122.4300)], CITY_FRONT_BACK, [(37.7840, -122.3790), (37.7805, -122.3812), (37.7781, -122.3830), (37.7776, -122.3858), (37.7772, -122.3870), (37.7770, -122.3885), (37.7772, -122.3870)], list(reversed(OUT_SOUTH))),
         "stops": [
             {"at": (37.8140, -122.4300), "name": "Off Aquatic Park (turnaround)", "type": "view",
              "notes": "Golden Gate sunset view. Aquatic Park itself is for swimmers; stay outside the breakwater."},
@@ -160,7 +158,7 @@ TRIPS = [
         "why": "A reliable crowd-pleaser when you have guests, and it pairs naturally with the Central Bay loop.",
         "when": "Cross in the morning; the Slot builds by early afternoon.",
         "route": r(OUT_NORTH, CITY_FRONT, SLOT_TO_SAUSALITO, [(37.8580, -122.4745), (37.8625, -122.4790), (37.8655, -122.4880), (37.8652, -122.4925)],
-                   [(37.8655, -122.4880), (37.8625, -122.4790), (37.8580, -122.4745)], [(37.8480, -122.4560), (37.8360, -122.4280)], HOME_FROM_NORTH[1:], IN_NORTH),
+                   [(37.8655, -122.4880), (37.8690, -122.4835), (37.8625, -122.4790), (37.8580, -122.4745)], [(37.8480, -122.4560), (37.8360, -122.4280)], HOME_FROM_NORTH[1:], IN_NORTH),
         "stops": [
             {"at": (37.8652, -122.4925), "name": "Sausalito marinas (guest docks)", "type": "dock",
              "notes": "Clipper Yacht Harbor's south dock (Fish Café) and Schoonmaker Point's north dock (Le Garage). Call ahead."},
@@ -205,7 +203,7 @@ TRIPS = [
         "summary": "Cross to Sausalito and drop the hook in sheltered Richardson Bay, away from the Central Bay chop.",
         "why": "It's one of the local sailors' favorite anchorages, with calm water and a view of the houseboats and hills.",
         "when": "Cross in the morning; come home with the breeze behind you.",
-        "route": r(OUT_NORTH, CITY_FRONT, SLOT_TO_SAUSALITO, SAUSALITO_FRONT, [(37.8650, -122.4800), (37.8715, -122.4840)],
+        "route": r(OUT_NORTH, CITY_FRONT, SLOT_TO_SAUSALITO, SAUSALITO_FRONT, [(37.8650, -122.4800), (37.8690, -122.4835)],
                    [(37.8650, -122.4800)], SAUSALITO_FRONT, [(37.8480, -122.4560), (37.8360, -122.4280)], HOME_FROM_NORTH[1:], IN_NORTH),
         "stops": [
             {"at": (37.8715, -122.4840), "name": "Richardson Bay anchorage", "type": "anchor",
@@ -217,18 +215,36 @@ TRIPS = [
 ]
 
 
-# Where to CHILL (still water, engine off) and where to DOCK on each trip: ids/names from data/places.json
-CHILL_DOCK = {
-    "clipper-cove":     (["clipper"], ["Treasure Isle Marina"]),
-    "daysail-loop":     (["angel-east", "belvedere", "richardson"], ["Ayala Cove docks", "Sam's Anchor Cafe", "Horizons", "Sausalito Yacht Harbor"]),
-    "sunset-cityfront": (["aquatic", "mccovey"], ["Pier 39 Marina", "South Beach Harbor (home)"]),
-    "angel-ayala":      (["ayala", "angel-east"], ["Ayala Cove docks"]),
-    "mccovey":          (["mccovey"], ["South Beach Harbor (home)", "The Ramp"]),
-    "halibut-south":    (["hunters-flats"], ["The Ramp"]),
-    "sausalito":        (["richardson"], ["Fish", "Clipper Yacht Harbor", "Le Garage", "Schoonmaker Point Marina", "Horizons", "Sausalito Yacht Harbor"]),
-    "tiburon-sams":     (["belvedere", "angel-east"], ["Sam's Anchor Cafe", "Ayala Cove docks"]),
-    "jack-london":      ([], ["Jack London Square guest docks", "Pasta Pelican"]),
-    "richardson":       (["richardson", "belvedere"], ["Sausalito Yacht Harbor", "Horizons", "Schoonmaker Point Marina"]),
+# PLAN = the stops the boat actually makes, in order. Each point must lie on the route (checked below).
+# kind: "dock" (tie up) or "chill" (engine off / anchor). ref: dock name or chill id in data/places.json.
+PLAN = {
+    "clipper-cove":     [("chill", "clipper", (37.8155, -122.3690), "Anchor and hang out")],
+    "daysail-loop":     [("chill", "angel-east", (37.8590, -122.4100), "Break in the lee of the island"),
+                         ("chill", "richardson", (37.8690, -122.4835), "Lunch at anchor")],
+    "sunset-cityfront": [("chill", "mccovey", (37.7770, -122.3885), "Float after sunset, then home")],
+    "angel-ayala":      [("dock", "Ayala Cove docks", (37.8700, -122.4362), "Tie up: bathrooms, picnic, hike"),
+                         ("chill", "angel-east", (37.8590, -122.4100), "Engine off, drift in the sun")],
+    "mccovey":          [("chill", "mccovey", (37.7768, -122.3885), "Anchor for the game")],
+    "halibut-south":    [("chill", "hunters-flats", (37.7330, -122.3540), "Drift and fish")],
+    "sausalito":        [("dock", "Le Garage", (37.8652, -122.4925), "Tie up for lunch (Schoonmaker Point north dock)"),
+                         ("chill", "richardson", (37.8690, -122.4835), "Float a while before heading home")],
+    "tiburon-sams":     [("dock", "Sam's Anchor Cafe", (37.8715, -122.4555), "Tie up for lunch"),
+                         ("chill", "angel-east", (37.8590, -122.4100), "Engine off on the way home")],
+    "jack-london":      [("dock", "Jack London Square guest docks", (37.7938, -122.2790), "Tie up and eat")],
+    "richardson":       [("chill", "richardson", (37.8690, -122.4835), "Anchor for the afternoon")],
+}
+# Other good spots near each trip that the boat does NOT stop at (shown as detour options).
+OPTIONS = {
+    "clipper-cove":     (["mccovey"], ["Treasure Isle Marina"]),
+    "daysail-loop":     (["belvedere", "ayala"], ["Ayala Cove docks", "Sam's Anchor Cafe", "Horizons", "Sausalito Yacht Harbor"]),
+    "sunset-cityfront": (["aquatic"], ["Pier 39 Marina"]),
+    "angel-ayala":      (["ayala"], []),
+    "mccovey":          ([], ["The Ramp"]),
+    "halibut-south":    ([], ["The Ramp"]),
+    "sausalito":        (["belvedere"], ["Fish", "Clipper Yacht Harbor", "Schoonmaker Point Marina", "Horizons", "Sausalito Yacht Harbor"]),
+    "tiburon-sams":     (["belvedere", "ayala"], ["Ayala Cove docks"]),
+    "jack-london":      ([], ["Pasta Pelican"]),
+    "richardson":       (["belvedere"], ["Sausalito Yacht Harbor", "Horizons", "Schoonmaker Point Marina"]),
 }
 NO_CHILL = {
     "jack-london": "The estuary is flat, but it's a busy channel with ferries and occasional ships, so don't drift there. "
@@ -238,10 +254,16 @@ PLACES = json.load(open(os.path.join(HERE, "data", "places.json")))
 _chill_ids = {c["id"] for c in PLACES["chill"]}
 _dock_names = {d["name"] for d in PLACES["docks"]}
 for t in TRIPS:
-    c, d = CHILL_DOCK[t["id"]]
-    assert set(c) <= _chill_ids, (t["id"], set(c) - _chill_ids)
-    assert set(d) <= _dock_names, (t["id"], set(d) - _dock_names)
-    t["chill"], t["dock"] = c, d
+    line = LineString([(lo, la) for la, lo in t["route"]])
+    t["plan"] = []
+    for kind, ref, at, what in PLAN[t["id"]]:
+        assert ref in (_chill_ids if kind == "chill" else _dock_names), (t["id"], ref)
+        off_m = line.distance(Point(at[1], at[0])) * 111000
+        assert off_m < 40, f"{t['id']}: plan stop {ref} is {off_m:.0f} m off the route"
+        t["plan"].append({"kind": kind, "ref": ref, "at": list(at), "what": what})
+    oc, od = OPTIONS[t["id"]]
+    assert set(oc) <= _chill_ids and set(od) <= _dock_names, t["id"]
+    t["opt_chill"], t["opt_dock"] = oc, od
     if t["id"] in NO_CHILL:
         t["no_chill"] = NO_CHILL[t["id"]]
 
@@ -275,7 +297,7 @@ for t in TRIPS:
     ok &= not issues
     out.append({**t, "nm": round(dist, 1),
                 "route": [[la, lo] for la, lo in t["route"]],
-                "stops": [{**s, "at": list(s["at"])} for s in t["stops"]]})
+                "stops": [{**s, "at": list(s["at"])} for s in t["stops"] if s["type"] == "view"]})
 
 json.dump(out, open(os.path.join(HERE, "data", "trips.json"), "w"), indent=0)
 if not ok:

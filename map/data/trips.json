@@ -87,25 +87,26 @@
 -122.3858
 ]
 ],
-"stops": [
-{
-"at": [
-37.8155,
--122.369
-],
-"name": "Clipper Cove anchorage",
-"type": "anchor",
-"notes": "Protected on three sides, 12\u201318 ft with a mud/sand bottom (good holding). Enter at or near high tide, and beware the shoal on the north side of the entrance. No permit for a stay under 24 hours."
-}
-],
+"stops": [],
 "tips": [
 "You cross the Oakland ship channel area near the Bay Bridge. Look hard for ships turning toward Oakland.",
 "Sheltered from the afternoon westerly, which makes it a good plan B when the Slot is too windy."
 ],
-"chill": [
-"clipper"
+"plan": [
+{
+"kind": "chill",
+"ref": "clipper",
+"at": [
+37.8155,
+-122.369
 ],
-"dock": [
+"what": "Anchor and hang out"
+}
+],
+"opt_chill": [
+"mccovey"
+],
+"opt_dock": [
 "Treasure Isle Marina"
 ],
 "nm": 7.3
@@ -206,6 +207,22 @@
 -122.4745
 ],
 [
+37.8625,
+-122.479
+],
+[
+37.869,
+-122.4835
+],
+[
+37.8625,
+-122.479
+],
+[
+37.858,
+-122.4745
+],
+[
 37.85,
 -122.47
 ],
@@ -281,15 +298,6 @@
 "stops": [
 {
 "at": [
-37.8595,
--122.4095
-],
-"name": "Lee side of Angel Island (east shore)",
-"type": "view",
-"notes": "The warmest, calmest spot on the loop, good for a break if your crew is cold."
-},
-{
-"at": [
 37.8365,
 -122.4665
 ],
@@ -312,18 +320,37 @@
 "Watch for gusts coming out of the lee of the islands and the headlands.",
 "Want lunch? Stop at Ayala Cove or Sausalito along the way."
 ],
-"chill": [
-"angel-east",
-"belvedere",
-"richardson"
+"plan": [
+{
+"kind": "chill",
+"ref": "angel-east",
+"at": [
+37.859,
+-122.41
 ],
-"dock": [
+"what": "Break in the lee of the island"
+},
+{
+"kind": "chill",
+"ref": "richardson",
+"at": [
+37.869,
+-122.4835
+],
+"what": "Lunch at anchor"
+}
+],
+"opt_chill": [
+"belvedere",
+"ayala"
+],
+"opt_dock": [
 "Ayala Cove docks",
 "Sam's Anchor Cafe",
 "Horizons",
 "Sausalito Yacht Harbor"
 ],
-"nm": 18.9
+"nm": 20.5
 },
 {
 "id": "sunset-cityfront",
@@ -405,20 +432,40 @@
 -122.379
 ],
 [
-37.7829,
--122.3818
+37.7805,
+-122.3812
 ],
 [
-37.7826,
--122.3845
+37.7781,
+-122.383
 ],
 [
-37.7819,
--122.3847
-],
-[
-37.7808,
+37.7776,
 -122.3858
+],
+[
+37.7772,
+-122.387
+],
+[
+37.777,
+-122.3885
+],
+[
+37.7772,
+-122.387
+],
+[
+37.7776,
+-122.3858
+],
+[
+37.7784,
+-122.3852
+],
+[
+37.7795,
+-122.3852
 ]
 ],
 "stops": [
@@ -445,15 +492,24 @@
 "Give racing sailboats room. They can't easily change course mid-race.",
 "Coming home after dark? Practice it first. Red, right, returning works at night too: look for the lights."
 ],
-"chill": [
-"aquatic",
-"mccovey"
+"plan": [
+{
+"kind": "chill",
+"ref": "mccovey",
+"at": [
+37.777,
+-122.3885
 ],
-"dock": [
-"Pier 39 Marina",
-"South Beach Harbor (home)"
+"what": "Float after sunset, then home"
+}
 ],
-"nm": 7.6
+"opt_chill": [
+"aquatic"
+],
+"opt_dock": [
+"Pier 39 Marina"
+],
+"nm": 8.1
 },
 {
 "id": "angel-ayala",
@@ -595,28 +651,35 @@
 -122.3858
 ]
 ],
-"stops": [
-{
-"at": [
-37.87,
--122.4362
-],
-"name": "Ayala Cove, Angel Island State Park",
-"type": "dock",
-"notes": "Day-use slips (fee, self-pay) and moorings. Caf\u00e9, picnic areas, trails. No one may stay on the island after sunset."
-}
-],
+"stops": [],
 "tips": [
 "Raccoon Strait has strong current. Time it with the tide.",
 "China Cove, just east of Ayala, and Quarry Beach on the east side are quieter lunch anchors."
 ],
-"chill": [
-"ayala",
-"angel-east"
+"plan": [
+{
+"kind": "dock",
+"ref": "Ayala Cove docks",
+"at": [
+37.87,
+-122.4362
 ],
-"dock": [
-"Ayala Cove docks"
+"what": "Tie up: bathrooms, picnic, hike"
+},
+{
+"kind": "chill",
+"ref": "angel-east",
+"at": [
+37.859,
+-122.41
 ],
+"what": "Engine off, drift in the sun"
+}
+],
+"opt_chill": [
+"ayala"
+],
+"opt_dock": [],
 "nm": 15.7
 },
 {
@@ -651,26 +714,24 @@
 -122.3885
 ]
 ],
-"stops": [
-{
-"at": [
-37.7768,
--122.3885
-],
-"name": "McCovey Cove",
-"type": "anchor",
-"notes": "No-wake, minimum speed, no overnight anchoring. Packed with kayaks, so go dead slow."
-}
-],
+"stops": [],
 "tips": [
 "Big fenders if you'll raft up, and a long-handled net for home-run balls.",
 "Check the Port of SF's McCovey Cove rules before you go."
 ],
-"chill": [
-"mccovey"
+"plan": [
+{
+"kind": "chill",
+"ref": "mccovey",
+"at": [
+37.7768,
+-122.3885
 ],
-"dock": [
-"South Beach Harbor (home)",
+"what": "Anchor for the game"
+}
+],
+"opt_chill": [],
+"opt_dock": [
 "The Ramp"
 ],
 "nm": 0.3
@@ -774,15 +835,6 @@
 "stops": [
 {
 "at": [
-37.733,
--122.354
-],
-"name": "Hunters Point flats",
-"type": "anchor",
-"notes": "Drift or troll slowly with live anchovies. California limit: 3 halibut, minimum 22 inches. You need a fishing license."
-},
-{
-"at": [
 37.718,
 -122.358
 ],
@@ -795,10 +847,19 @@
 "Check the current: drifting works best on a moderate tide, not a rip.",
 "Anchorage 8A (big ships waiting) is just offshore. Keep your distance."
 ],
-"chill": [
-"hunters-flats"
+"plan": [
+{
+"kind": "chill",
+"ref": "hunters-flats",
+"at": [
+37.733,
+-122.354
 ],
-"dock": [
+"what": "Drift and fish"
+}
+],
+"opt_chill": [],
+"opt_dock": [
 "The Ramp"
 ],
 "nm": 8.6
@@ -887,6 +948,10 @@
 -122.488
 ],
 [
+37.869,
+-122.4835
+],
+[
 37.8625,
 -122.479
 ],
@@ -935,33 +1000,42 @@
 -122.3858
 ]
 ],
-"stops": [
-{
-"at": [
-37.8652,
--122.4925
-],
-"name": "Sausalito marinas (guest docks)",
-"type": "dock",
-"notes": "Clipper Yacht Harbor's south dock (Fish Caf\u00e9) and Schoonmaker Point's north dock (Le Garage). Call ahead."
-}
-],
+"stops": [],
 "tips": [
 "The Sausalito ferry runs the same path. Watch for it.",
 "Slow down inside Richardson Bay: there are no-wake zones."
 ],
-"chill": [
-"richardson"
+"plan": [
+{
+"kind": "dock",
+"ref": "Le Garage",
+"at": [
+37.8652,
+-122.4925
 ],
-"dock": [
+"what": "Tie up for lunch (Schoonmaker Point north dock)"
+},
+{
+"kind": "chill",
+"ref": "richardson",
+"at": [
+37.869,
+-122.4835
+],
+"what": "Float a while before heading home"
+}
+],
+"opt_chill": [
+"belvedere"
+],
+"opt_dock": [
 "Fish",
 "Clipper Yacht Harbor",
-"Le Garage",
 "Schoonmaker Point Marina",
 "Horizons",
 "Sausalito Yacht Harbor"
 ],
-"nm": 16.0
+"nm": 16.3
 },
 {
 "id": "tiburon-sams",
@@ -1103,26 +1177,35 @@
 -122.3858
 ]
 ],
-"stops": [
+"stops": [],
+"tips": [
+"Raccoon Strait current can be strong. Plan with the current tables."
+],
+"plan": [
 {
+"kind": "dock",
+"ref": "Sam's Anchor Cafe",
 "at": [
 37.8715,
 -122.4555
 ],
-"name": "Sam's Anchor Cafe, Tiburon",
-"type": "dock",
-"notes": "A guest dock, but shallow at low tide. Some charter fleets don't allow it for that reason."
+"what": "Tie up for lunch"
+},
+{
+"kind": "chill",
+"ref": "angel-east",
+"at": [
+37.859,
+-122.41
+],
+"what": "Engine off on the way home"
 }
 ],
-"tips": [
-"Raccoon Strait current can be strong. Plan with the current tables."
-],
-"chill": [
+"opt_chill": [
 "belvedere",
-"angel-east"
+"ayala"
 ],
-"dock": [
-"Sam's Anchor Cafe",
+"opt_dock": [
 "Ayala Cove docks"
 ],
 "nm": 16.0
@@ -1247,24 +1330,24 @@
 -122.3858
 ]
 ],
-"stops": [
-{
-"at": [
-37.7938,
--122.279
-],
-"name": "Jack London Square guest docks",
-"type": "dock",
-"notes": "Free, first come, first served. Pasta Pelican and Quinn's Lighthouse give free tie-up when you eat there."
-}
-],
+"stops": [],
 "tips": [
 "The way in follows the Oakland ship channel. Stay at the edge and watch for container ships.",
 "Watch for the Oakland/Alameda ferries in the estuary."
 ],
-"chill": [],
-"dock": [
-"Jack London Square guest docks",
+"plan": [
+{
+"kind": "dock",
+"ref": "Jack London Square guest docks",
+"at": [
+37.7938,
+-122.279
+],
+"what": "Tie up and eat"
+}
+],
+"opt_chill": [],
+"opt_dock": [
 "Pasta Pelican"
 ],
 "no_chill": "The estuary is flat, but it's a busy channel with ferries and occasional ships, so don't drift there. The chill on this trip is tying up at Jack London Square.",
@@ -1342,8 +1425,8 @@
 -122.48
 ],
 [
-37.8715,
--122.484
+37.869,
+-122.4835
 ],
 [
 37.865,
@@ -1394,29 +1477,29 @@
 -122.3858
 ]
 ],
-"stops": [
-{
-"at": [
-37.8715,
--122.484
-],
-"name": "Richardson Bay anchorage",
-"type": "anchor",
-"notes": "Stays up to 72 hours in the designated anchorage. There's no anchoring in the eelgrass zone, small-boat channels, or the Audubon sanctuary, so check the RBRA map."
-}
-],
+"stops": [],
 "tips": [
 "Shallow outside the channels. Watch your depth sounder."
 ],
-"chill": [
-"richardson",
+"plan": [
+{
+"kind": "chill",
+"ref": "richardson",
+"at": [
+37.869,
+-122.4835
+],
+"what": "Anchor for the afternoon"
+}
+],
+"opt_chill": [
 "belvedere"
 ],
-"dock": [
+"opt_dock": [
 "Sausalito Yacht Harbor",
 "Horizons",
 "Schoonmaker Point Marina"
 ],
-"nm": 15.9
+"nm": 15.6
 }
 ]

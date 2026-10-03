@@ -77,6 +77,12 @@ h3.hc { color: #5eead4; } h3.hd { color: #ffb27a; }
 .engine { color: var(--muted); font-size: 11.5px; margin: 8px 2px 4px; }
 .lbl.chl { color: #5eead4; }
 .lbl.boatlbl { background: #4fa3ff; color: #04121f; }
+.lbl.dk { color: #ffb27a; }
+h3.hs { color: #fff; } h3.ho { color: var(--muted); margin-top: 14px; } h3.ho span { text-transform: none; letter-spacing: 0; font-weight: 400; }
+.ic.num { font-weight: 900; color: #0b0f14; } .ic.num.chill { background: #2dd4bf; } .ic.num.dock { background: #ff8a3d; }
+.kind { font-size: 10.5px; font-weight: 800; letter-spacing: .5px; } .kind.chill { color: #5eead4; } .kind.dock { color: #ffb27a; }
+.what { display: block; font-style: italic; color: #e6edf3; font-size: 12.5px; margin-top: 2px; }
+.cd.opt { opacity: .75; } .cd.opt:hover { opacity: 1; }
 .tabs { display: flex; gap: 6px; margin-top: 12px; }
 .tab { flex: 1; background: #161d26; color: var(--fg); border: 1px solid #2a3542; border-radius: 9px; padding: 7px 8px; cursor: pointer; font: inherit; font-weight: 600; }
 .tab.on { background: #ff7a33; border-color: #ff7a33; color: #1a0d05; }
@@ -226,20 +232,34 @@ function openTrip(id) {
       .bindPopup(`<b>${esc(s.name)}</b><br>${esc(s.notes)}`).addTo(focusLayer);
   });
   const extra = tripPlaces(t, line);
-  for (const c of extra.chill) {
-    L.circle(c.at, { radius: c.r * 1.5, stroke: false, fillColor: '#2dd4bf', fillOpacity: 0.10, interactive: false }).addTo(focusLayer);
-    c.marker = L.circle(c.at, { radius: c.r, color: '#2dd4bf', weight: 2, fillColor: '#2dd4bf', fillOpacity: 0.25 })
-      .bindTooltip('CHILL · ' + c.name, { permanent: true, direction: 'top', className: 'lbl chl', offset: [0, -4] })
-      .bindPopup(`<b>${esc(c.name)}</b><br><span style="color:#5eead4">Good:</span> ${esc(c.good)}<br><span style="color:#f5c542">Watch out:</span> ${esc(c.watch)}`)
+  // options first (dim), so the planned stops draw on top
+  for (const c of extra.optChill) {
+    c.marker = L.circle(c.at, { radius: c.r, color: '#2dd4bf', weight: 1, dashArray: '3 5', fillColor: '#2dd4bf', fillOpacity: 0.06 })
+      .bindTooltip('option · ' + c.name, { direction: 'top', className: 'lbl' })
+      .bindPopup(`<b>${esc(c.name)}</b> <span class="meta">(option, not on this route)</span><br>${esc(c.good)}<br><span style="color:#f5c542">Watch out:</span> ${esc(c.watch)}`)
       .addTo(focusLayer);
   }
-  for (const d of extra.dock) {
+  for (const d of extra.optDock) {
     const [col, ch] = DOCK_STYLE[d.type];
-    d.marker = L.marker(d.at, { zIndexOffset: 500, icon: L.divIcon({ className: 'pin', iconSize: [24, 24], iconAnchor: [12, 12],
-      html: `<div style="background:${col};width:24px;height:24px;font-size:11px;font-weight:800;color:#0b0f14">${ch}</div>` }) })
-      .bindTooltip('DOCK · ' + d.name, { permanent: true, direction: 'right', offset: [12, 0], className: 'lbl dlbl' })
-      .bindPopup(`<b>${esc(d.name)}</b><br>${esc(d.how)}<br><span class="meta">${esc(d.contact)}</span>`).addTo(focusLayer);
+    d.marker = L.marker(d.at, { opacity: 0.55, icon: L.divIcon({ className: 'pin', iconSize: [20, 20], iconAnchor: [10, 10],
+      html: `<div style="background:${col};width:20px;height:20px;font-size:10px;font-weight:800;color:#0b0f14">${ch}</div>` }) })
+      .bindTooltip('option · ' + d.name, { direction: 'right', className: 'lbl' })
+      .bindPopup(`<b>${esc(d.name)}</b> <span class="meta">(option, not on this route)</span><br>${esc(d.how)}<br><span class="meta">${esc(d.contact)}</span>`).addTo(focusLayer);
   }
+  extra.plan.forEach((p, i) => {
+    if (p.kind === 'chill') {
+      L.circle(p.place.at, { radius: p.place.r, color: '#2dd4bf', weight: 2, fillColor: '#2dd4bf', fillOpacity: 0.22, interactive: false }).addTo(focusLayer);
+    } else {
+      const [col, ch] = DOCK_STYLE[p.place.type];
+      L.marker(p.place.at, { interactive: false, icon: L.divIcon({ className: 'pin', iconSize: [22, 22], iconAnchor: [11, 11],
+        html: `<div style="background:${col};width:22px;height:22px;font-size:10px;font-weight:800;color:#0b0f14">${ch}</div>` }) }).addTo(focusLayer);
+    }
+    const col = p.kind === 'chill' ? '#2dd4bf' : '#ff8a3d';
+    p.marker = L.marker(p.at, { zIndexOffset: 800, icon: L.divIcon({ className: 'pin', iconSize: [28, 28], iconAnchor: [14, 14],
+      html: `<div style="background:${col};width:28px;height:28px;font-size:13px;font-weight:900;color:#0b0f14">${i + 1}</div>` }) })
+      .bindTooltip(`Stop ${i + 1} · ${p.kind === 'dock' ? 'DOCK' : 'CHILL'} · ${p.place.name}`, { permanent: true, direction: 'right', offset: [16, 0], className: 'lbl ' + (p.kind === 'dock' ? 'dk' : 'chl') })
+      .bindPopup(stopPopup(p, i)).addTo(focusLayer);
+  });
   map.flyToBounds(L.latLngBounds(t.route).pad(0.12), { duration: 1, paddingTopLeft: [10, 10] });
   animate(t, line, len, extra);
 
@@ -287,34 +307,49 @@ function openTrip(id) {
   d.querySelectorAll('[data-fly]').forEach(b => b.onclick = () => {
     const [kind, i] = b.dataset.fly.split(':');
     const item = extra[kind][+i];
-    map.flyTo(item.at, kind === 'chill' ? 15 : 16, { duration: 0.9 });
+    map.flyTo(item.at, kind === 'optDock' ? 16 : 15, { duration: 0.9 });
     setTimeout(() => item.marker.openPopup(), 950);
   });
 }
 
 function tripPlaces(t, line) {
   const detour = at => turf.pointToLineDistance(turf.point([at[1], at[0]]), line, { units: 'nauticalmiles' });
-  const chill = (t.chill || []).map(id => ({ ...PLACES.chill.find(c => c.id === id) }));
-  const dock = (t.dock || []).map(n => ({ ...PLACES.docks.find(d => d.name === n) }));
-  for (const x of [...chill, ...dock]) x.off = detour(x.at);
-  return { chill, dock };
+  const chillById = id => PLACES.chill.find(c => c.id === id);
+  const dockByName = n => PLACES.docks.find(d => d.name === n);
+  const plan = (t.plan || []).map(p => ({ ...p, place: p.kind === 'chill' ? chillById(p.ref) : dockByName(p.ref) }));
+  const optChill = (t.opt_chill || []).map(id => ({ ...chillById(id) })).map(c => ({ ...c, off: detour(c.at) }));
+  const optDock = (t.opt_dock || []).map(n => ({ ...dockByName(n) })).map(d => ({ ...d, off: detour(d.at) }));
+  return { plan, optChill, optDock };
 }
-const offTxt = nm => nm < 0.2 ? '<span class="on">on your route</span>' : `<span class="det">+${(nm * 2).toFixed(1)} nm detour</span>`;
+
+function stopPopup(p, i) {
+  const pl = p.place;
+  return `<b>Stop ${i + 1}: ${esc(pl.name)}</b><br><i>${esc(p.what)}</i><br>` + (p.kind === 'chill'
+    ? `<span style="color:#5eead4">Good:</span> ${esc(pl.good)}<br><span style="color:#f5c542">Watch out:</span> ${esc(pl.watch)}`
+    : `${esc(pl.how)}<br><span class="meta">${esc(pl.contact)}</span>`);
+}
 
 function chillDockHtml(t, extra) {
-  const chill = extra.chill.length ? extra.chill.map((c, i) => `
-      <button class="cd" data-fly="chill:${i}"><span class="ic chill">~</span>
-        <span><b>${esc(c.name)}</b> ${offTxt(c.off)}${c.fav ? ' <span class="fav">FAVORITE</span>' : ''}
-          <span class="good">${esc(c.good)}</span><span class="watch">⚠ ${esc(c.watch)}</span></span></button>`).join('')
-    : `<p class="meta" style="margin:4px 0 0">${esc(t.no_chill || 'No real still-water spot on this route.')}</p>`;
-  const dock = extra.dock.map((d, i) => `
-      <button class="cd" data-fly="dock:${i}"><span class="ic ${d.type}">${DOCK_STYLE[d.type][1]}</span>
-        <span><b>${esc(d.name)}</b> ${offTxt(d.off)}<span class="good">${esc(d.how)}</span><span class="ph">${esc(d.contact)}</span></span></button>`).join('');
+  const stops = extra.plan.length ? extra.plan.map((p, i) => {
+    const pl = p.place;
+    const body = p.kind === 'chill'
+      ? `<span class="good">${esc(pl.good)}</span><span class="watch">⚠ ${esc(pl.watch)}</span>`
+      : `<span class="good">${esc(pl.how)}</span><span class="ph">${esc(pl.contact)}</span>`;
+    return `<button class="cd" data-fly="plan:${i}"><span class="ic num ${p.kind}">${i + 1}</span>
+      <span><span class="kind ${p.kind}">${p.kind === 'dock' ? 'DOCK' : 'CHILL · engine off'}</span> <b>${esc(pl.name)}</b>${pl.fav ? ' <span class="fav">FAVORITE</span>' : ''}
+        <span class="what">${esc(p.what)}</span>${body}</span></button>`;
+  }).join('') : '';
+  const noChill = !extra.plan.some(p => p.kind === 'chill') && t.no_chill ? `<p class="meta" style="margin:6px 2px">${esc(t.no_chill)}</p>` : '';
+  const opts = [...extra.optChill.map((c, i) => ({ k: 'optChill', i, x: c, label: 'chill', txt: c.good })),
+                ...extra.optDock.map((d, i) => ({ k: 'optDock', i, x: d, label: 'dock', txt: d.how }))];
+  const optHtml = opts.length ? `<h3 class="ho">Other options nearby <span>(the route doesn't stop here)</span></h3>` + opts.map(o => `
+      <button class="cd opt" data-fly="${o.k}:${o.i}"><span class="ic ${o.label === 'chill' ? 'chill' : o.x.type}">${o.label === 'chill' ? '~' : DOCK_STYLE[o.x.type][1]}</span>
+        <span><b>${esc(o.x.name)}</b> <span class="det">${o.label} · +${(o.x.off * 2).toFixed(1)} nm detour</span><span class="good">${esc(o.txt)}</span></span></button>`).join('') : '';
   return `<div class="cdbox">
-      <h3 class="hc">Where to chill <span>(still water, engine off)</span></h3>${chill}
-      <h3 class="hd">Where to dock</h3>${dock}
+      <h3 class="hs">Your stops on this trip</h3>${stops}${noChill}
       <p class="engine">Engine off? Only in sheltered water away from channels and ferry routes. The current still moves you,
-        so know where you'll drift, keep a lookout, and have the anchor ready.</p></div>`;
+        so know where you'll drift, keep a lookout, and have the anchor ready.</p>
+      ${optHtml}</div>`;
 }
 
 function closeTrip() {
@@ -336,15 +371,12 @@ function animate(t, line, len, extra) {
   m.bindTooltip('', { permanent: true, direction: 'right', offset: [14, 0], className: 'lbl boatlbl' });
   m.closeTooltip();
 
-  // Where the boat stops: the trip's dock/anchor stops, plus chill spots right on the route.
+  // The boat parks exactly at the trip's planned stops, nowhere else.
   const at = ll => turf.nearestPointOnLine(line, turf.point([ll[1], ll[0]]), { units: 'nauticalmiles' }).properties.location;
-  const cands = [
-    ...t.stops.filter(s => s.type === 'dock').map(s => ({ d: at(s.at), secs: 3.2, text: 'Docked · ' + s.name })),
-    ...t.stops.filter(s => s.type === 'anchor').map(s => ({ d: at(s.at), secs: 2.8, text: 'Anchored · ' + s.name })),
-    ...(extra?.chill || []).filter(c => c.off < 0.15).map(c => ({ d: at(c.at), secs: 2.6, text: 'Engine off · ' + c.name })),
-  ].filter(p => p.d > 0.1).sort((a, b) => a.d - b.d);
-  const pauses = [];
-  for (const p of cands) if (!pauses.some(q => Math.abs(q.d - p.d) < 0.2)) pauses.push(p);   // the dock wins over a chill spot at the same place
+  const pauses = (extra?.plan || []).map((p, i) => ({
+    d: at(p.at), secs: p.kind === 'dock' ? 3.4 : 3.0,
+    text: `Stop ${i + 1} · ${p.kind === 'dock' ? 'Docked at' : 'Engine off at'} ${p.place.name}`,
+  })).sort((a, b) => a.d - b.d);
 
   const speed = len / Math.min(40, Math.max(8, len * 2.4));        // nm per animation second
   // timeline: [travel to pause 1][pause 1][travel to pause 2]...[travel to end][short hold at the end]
